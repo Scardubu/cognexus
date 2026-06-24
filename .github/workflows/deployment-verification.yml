@@ -1,0 +1,49 @@
+name: Deployment verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Optional deployed Cognexus base URL; leave blank for static verification only
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      base_url:
+        description: Optional deployed Cognexus base URL
+        required: false
+        type: string
+    secrets:
+      api_key:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install verification dependencies
+        run: python -m pip install "PyYAML>=6.0.2,<7"
+      - name: Verify static controls and deployed service
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          API_KEY: ${{ secrets.api_key || secrets.NEXUS_DEPLOYMENT_API_KEY }}
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "${BASE_URL}" ]]; then
+            args+=(--base-url "${BASE_URL}")
+          fi
+          if [[ -n "${API_KEY}" ]]; then
+            args+=(--api-key "${API_KEY}")
+          fi
+          python scripts/verify_deployment.py "${args[@]}"

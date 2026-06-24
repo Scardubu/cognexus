@@ -1,0 +1,34 @@
+include README.md
+include CHANGELOG.md
+include SECURITY.md
+include CONTRIBUTING.md
+include AGENTS.md
+include Dockerfile
+include docker-compose.yml
+include Makefile
+include pyproject.toml
+include requirements.txt
+include requirements-dev.txt
+include constraints/runtime.txt
+include .env.example
+include .dockerignore
+include .gitignore
+include .cursorrules
+recursive-include .codex *
+recursive-include .github *
+recursive-include .agents/skills *
+recursive-include config *.json
+recursive-include deploy *.yaml *.yml
+recursive-include docs *.md
+recursive-include evals *.yaml *.yml
+recursive-include scripts *.py *.sh
+recursive-include skill_runtime/bundled_skills *
+recursive-include skills *.yaml *.yml
+recursive-include tests *.py
+prune artifacts
+prune build
+prune dist
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store
+global-exclude ._*

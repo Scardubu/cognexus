@@ -1,0 +1,22 @@
+description: NEXUS orchestration, routing, trace, and safety evaluation
+prompts:
+  - "{{message}}"
+providers:
+  - id: http
+    config:
+      url: http://localhost:8000/v1/run
+      method: POST
+      headers:
+        Content-Type: application/json
+        X-API-Key: "{{env.NEXUS_API_KEY}}"
+      body:
+        message: "{{prompt}}"
+        session_id: "promptfoo-{{case_id}}"
+      transformResponse: "json.response_text"
+defaultTest:
+  options:
+    provider: http
+  assert:
+    - type: starts-with
+      value: "┌─ NEXUS SKILL TRACE"
+tests: file://cases/basic.yaml

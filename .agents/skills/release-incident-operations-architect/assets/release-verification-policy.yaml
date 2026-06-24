@@ -1,0 +1,29 @@
+policy_version: 1
+release:
+  immutable_artifact_digest_required: true
+  dependency_audit_required: true
+  sbom_required: true
+  provenance_required: true
+  rollback_rehearsal_required: true
+  backup_restore_evidence_required_for_data_changes: true
+promotion:
+  stages_percent: [1, 10, 25, 50, 100]
+  minimum_dwell_minutes: 10
+  required_signals: [availability, latency, error_rate, saturation, critical_synthetics, security_events]
+  automatic_abort_on_gate_failure: true
+rollback:
+  previous_artifact_required: true
+  compatibility_window_required: true
+  queue_and_inflight_drain_required: true
+incident:
+  roles: [incident_commander, technical_lead, communications_lead, scribe]
+  sev1_ack_minutes: 5
+  sev1_update_minutes: 15
+  utc_timeline_required: true
+  pii_and_secrets_forbidden: true
+evidence:
+  retain_days: 90
+  required: [test_report, vulnerability_report, sbom, provenance, release_manifest, deployment_verification]
+gates:
+  predeploy: [artifact_integrity, migration_compatibility, rollback_readiness]
+  postdeploy: [health, readiness, critical_synthetics, slo_window]

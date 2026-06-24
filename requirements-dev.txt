@@ -1,0 +1,18 @@
+-r requirements.txt
+
+# Tests, typing, linting, packaging, and evaluation helpers
+pytest>=8.4,<9
+pytest-asyncio>=1.1,<2
+pytest-cov>=6.2,<7
+# Starlette 1.x TestClient backend (development/test only).
+httpx2>=2.4,<3
+fakeredis>=2.31,<3
+ruff>=0.12,<1
+mypy>=1.17,<2
+build>=1.3,<2
+setuptools>=80,<81
+wheel>=0.45,<1
+pip-audit>=2.10,<3
+packaging>=25,<26
+PyYAML>=6.0,<7
+types-PyYAML>=6.0.12,<7

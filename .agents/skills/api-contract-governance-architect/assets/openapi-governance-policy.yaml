@@ -1,0 +1,31 @@
+policy_version: 1
+compatibility:
+  default_strategy: additive
+  breaking_changes_require_version: true
+  mixed_version_rollout_required: true
+errors:
+  envelope_fields: [code, message, request_id]
+  stable_codes_required: true
+  internal_details_forbidden: true
+pagination:
+  mutable_collections: cursor
+  max_page_size: 100
+  cursor_must_be_opaque: true
+idempotency:
+  retryable_writes_require_key: true
+  request_digest_binding: true
+  concurrent_replay_test_required: true
+webhooks:
+  timestamp_signature_required: true
+  replay_store_required: true
+  constant_time_verification_required: true
+deprecation:
+  owner_required: true
+  sunset_date_required: true
+  usage_telemetry_required: true
+gates:
+  - schema_lint
+  - breaking_change_diff
+  - provider_contract_tests
+  - consumer_fixture_tests
+  - replay_and_idempotency_tests

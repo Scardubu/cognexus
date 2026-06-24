@@ -1,0 +1,120 @@
+name: Release artifacts
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Expected source version (for example 3.3.1)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  release-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+            constraints/runtime.txt
+      - name: Resolve and verify release version
+        id: version
+        shell: bash
+        env:
+          DISPATCH_VERSION: ${{ inputs.version }}
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            expected="${GITHUB_REF_NAME#v}"
+          else
+            expected="${DISPATCH_VERSION}"
+          fi
+          python scripts/verify_version.py --expected "${expected}"
+          echo "value=${expected}" >> "${GITHUB_OUTPUT}"
+      - name: Install audited build environment
+        run: |
+          python -m pip install --upgrade "pip>=26,<27"
+          python -m pip install -r requirements-dev.txt
+          python -m pip check
+      - name: Run release gate and build distributions
+        run: |
+          python scripts/quality_gate.py --quick
+          python scripts/verify_runtime_lock.py
+          python scripts/generate_repository_inventory.py --check
+          rm -rf build dist
+          python -m build --no-isolation
+          python scripts/verify_distribution.py
+          python -m venv /tmp/cognexus-runtime-sbom
+          /tmp/cognexus-runtime-sbom/bin/python -m pip install --upgrade "pip>=26,<27"
+          /tmp/cognexus-runtime-sbom/bin/python -m pip install \
+            -r requirements.txt \
+            -c constraints/runtime.txt
+          /tmp/cognexus-runtime-sbom/bin/python -m pip check
+          /tmp/cognexus-runtime-sbom/bin/python -m skill_runtime.cli package \
+            --output dist/skills
+          /tmp/cognexus-runtime-sbom/bin/python scripts/generate_sbom.py \
+            --output dist/cognexus-runtime.cdx.json
+          python scripts/verify_runtime_lock.py \
+            --sbom dist/cognexus-runtime.cdx.json \
+            --require-sbom
+      - name: Generate SPDX source SBOM
+        uses: anchore/sbom-action@v0.24.0
+        with:
+          path: .
+          format: spdx-json
+          output-file: dist/cognexus-source.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+      - name: Seal checksums and release manifest
+        run: |
+          python scripts/create_checksums.py
+          python scripts/create_release_manifest.py
+          python scripts/verify_release.py \
+            --dist dist \
+            --sbom dist/cognexus-runtime.cdx.json \
+            --require-sbom
+      - name: Verify wheel from a clean environment
+        run: |
+          python -m venv /tmp/cognexus-release-check
+          /tmp/cognexus-release-check/bin/python -m pip install --upgrade "pip>=26,<27"
+          /tmp/cognexus-release-check/bin/python -m pip install \
+            -c "${{ github.workspace }}/constraints/runtime.txt" \
+            dist/*.whl
+          (
+            cd /tmp
+            /tmp/cognexus-release-check/bin/python -m pip check
+            /tmp/cognexus-release-check/bin/cognexus-server --version
+            /tmp/cognexus-release-check/bin/cognexus-skills validate
+          )
+      - name: Attest build provenance
+        uses: actions/attest@v4
+        with:
+          subject-checksums: dist/SHA256SUMS
+      - name: Attest runtime SBOM for wheel
+        uses: actions/attest@v4
+        with:
+          subject-path: dist/*.whl
+          sbom-path: dist/cognexus-runtime.cdx.json
+      - name: Attest source SBOM for source distribution
+        uses: actions/attest@v4
+        with:
+          subject-path: dist/*.tar.gz
+          sbom-path: dist/cognexus-source.spdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cognexus-${{ steps.version.outputs.value }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 90

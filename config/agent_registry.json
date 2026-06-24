@@ -1,0 +1,551 @@
+{
+  "version": "3.3.1",
+  "description": "Canonical 34-skill NEXUS registry: 20 unique specialist agents and 14 executable deferred tools.",
+  "implementation_types": {
+    "tool": "Stateless @function_tool \u2014 calls specialist LLM, returns JSON",
+    "agent": "Specialist Agent \u2014 complex domain, exposed via agent.as_tool()"
+  },
+  "skills": [
+    {
+      "id": 1,
+      "original_name": "security-hardening-auditor",
+      "openai_name": "security_hardening_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        1
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Security audits require sustained domain reasoning + own tool set",
+      "status": "implemented"
+    },
+    {
+      "id": 2,
+      "original_name": "backend-systems-auditor",
+      "openai_name": "backend_systems_auditor_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        1
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Backend systems audit requires multi-step analysis + Effect-TS expertise",
+      "status": "implemented"
+    },
+    {
+      "id": 3,
+      "original_name": "nigerian-fintech-compliance-architect",
+      "openai_name": "taxbridge_compliance_agent",
+      "type": "agent",
+      "cluster": "Vertical Intelligence",
+      "tiers": [
+        1,
+        8
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Regulatory compliance = legal/financial risk, needs dense domain prompt + file attachments",
+      "status": "implemented"
+    },
+    {
+      "id": 4,
+      "original_name": "testing-strategy-architect",
+      "openai_name": "testing_strategy_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        2
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Testing strategy requires multi-step reasoning across the full tech stack",
+      "status": "implemented"
+    },
+    {
+      "id": 5,
+      "original_name": "typescript-config-surgeon",
+      "openai_name": "typescript_config_surgeon",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        2
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "correctness",
+      "rationale": "Stateless config analysis \u2014 input tsconfig, output diff recommendations",
+      "status": "implemented"
+    },
+    {
+      "id": 6,
+      "original_name": "component-quality-gate",
+      "openai_name": "component_quality_gate",
+      "type": "tool",
+      "cluster": "Frontend Design",
+      "tiers": [
+        2,
+        7
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "correctness",
+      "rationale": "Stateless component analysis \u2014 input code, output pass/fail per gate",
+      "status": "implemented"
+    },
+    {
+      "id": 7,
+      "original_name": "effect-ts-layer-architect",
+      "openai_name": "effect_ts_layer_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        2,
+        4
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Effect-TS requires dense FP domain knowledge + multi-step architecture review",
+      "status": "implemented"
+    },
+    {
+      "id": 8,
+      "original_name": "backend-domain-model-architect",
+      "openai_name": "backend_domain_model_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        2,
+        8
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "DDD modeling requires multi-turn reasoning + business invariant analysis",
+      "status": "implemented"
+    },
+    {
+      "id": 9,
+      "original_name": "api-contract-governance-architect",
+      "openai_name": "api_contract_governance_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        2,
+        4
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "API contract governance needs OpenAPI analysis + breaking change classification",
+      "status": "implemented"
+    },
+    {
+      "id": 10,
+      "original_name": "nextjs-performance-architect",
+      "openai_name": "nextjs_performance_agent",
+      "type": "agent",
+      "cluster": "Application Layer",
+      "tiers": [
+        3
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Next.js 15 perf requires multi-step RSC/streaming/bundle analysis",
+      "status": "implemented"
+    },
+    {
+      "id": 11,
+      "original_name": "edge-cache-architecture-architect",
+      "openai_name": "edge_cache_architect",
+      "type": "tool",
+      "cluster": "Application Layer",
+      "tiers": [
+        3
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "performance",
+      "rationale": "Stateless \u2014 input route + runtime, output cache strategy",
+      "status": "implemented"
+    },
+    {
+      "id": 12,
+      "original_name": "opentelemetry-observability-architect",
+      "openai_name": "otel_observability_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        3
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "OTel instrumentation requires multi-step span/metric design across all services",
+      "status": "implemented"
+    },
+    {
+      "id": 13,
+      "original_name": "real-time-systems-architect",
+      "openai_name": "real_time_systems_agent",
+      "type": "agent",
+      "cluster": "Real-Time & Data",
+      "tiers": [
+        3
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Real-time architecture requires multi-step connection + scaling design",
+      "status": "implemented"
+    },
+    {
+      "id": 14,
+      "original_name": "vscode-debug-profiler",
+      "openai_name": "vscode_debug_profiler",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        3,
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "performance",
+      "rationale": "Stateless \u2014 generates launch.json/tasks.json config",
+      "status": "implemented"
+    },
+    {
+      "id": 15,
+      "original_name": "bullmq-job-architect",
+      "openai_name": "bullmq_job_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        3
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "BullMQ architecture requires multi-step analysis of job + worker + connection design",
+      "status": "implemented"
+    },
+    {
+      "id": 16,
+      "original_name": "frontend-product-design-architect",
+      "openai_name": "frontend_design_agent",
+      "type": "agent",
+      "cluster": "Frontend Design",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Frontend design requires multi-step RSC/React 19/Tailwind v4 system reasoning",
+      "status": "implemented"
+    },
+    {
+      "id": 17,
+      "original_name": "accessibility-system-architect",
+      "openai_name": "accessibility_architect",
+      "type": "tool",
+      "cluster": "Frontend Design",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "architecture",
+      "rationale": "Stateless WCAG audit \u2014 input component, output violations + patches",
+      "status": "implemented"
+    },
+    {
+      "id": 18,
+      "original_name": "motion-performance-architect",
+      "openai_name": "motion_performance_architect",
+      "type": "tool",
+      "cluster": "Frontend Design",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "architecture",
+      "rationale": "STRATEGY tool \u2014 must be called before motion_interaction_architect",
+      "status": "implemented"
+    },
+    {
+      "id": 19,
+      "original_name": "motion-interaction-architect",
+      "openai_name": "motion_interaction_architect",
+      "type": "tool",
+      "cluster": "Frontend Design",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "architecture",
+      "rationale": "IMPLEMENTATION tool \u2014 requires motion_performance_architect output as input",
+      "status": "implemented"
+    },
+    {
+      "id": 20,
+      "original_name": "multi-agent-orchestration-architect",
+      "openai_name": "multi_agent_orchestration_agent",
+      "type": "agent",
+      "cluster": "Vertical Intelligence",
+      "tiers": [
+        4,
+        5
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "SwarmX architecture requires dense multi-agent domain knowledge",
+      "status": "implemented"
+    },
+    {
+      "id": 21,
+      "original_name": "ai-feature-architect",
+      "openai_name": "ai_feature_agent",
+      "type": "agent",
+      "cluster": "Application Layer",
+      "tiers": [
+        4,
+        5
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "AI feature design requires multi-step RAG/streaming/tool-use architecture",
+      "status": "implemented"
+    },
+    {
+      "id": 22,
+      "original_name": "prisma-database-architect",
+      "openai_name": "prisma_database_agent",
+      "type": "agent",
+      "cluster": "Backend Engineering",
+      "tiers": [
+        4
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Database architecture requires multi-step schema + migration + query design",
+      "status": "implemented"
+    },
+    {
+      "id": 23,
+      "original_name": "api-automation-architect",
+      "openai_name": "api_automation_architect",
+      "type": "tool",
+      "cluster": "Application Layer",
+      "tiers": [
+        4
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "architecture",
+      "rationale": "Stateless \u2014 input OpenAPI spec, output automation strategy",
+      "status": "implemented"
+    },
+    {
+      "id": 24,
+      "original_name": "react-native-expo-architect",
+      "openai_name": "react_native_expo_agent",
+      "type": "agent",
+      "cluster": "Mobile & Meta",
+      "tiers": [
+        4
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "RN/Expo architecture requires multi-step native module + EAS + navigation design",
+      "status": "implemented"
+    },
+    {
+      "id": 25,
+      "original_name": "vscode-monorepo-forge",
+      "openai_name": "vscode_monorepo_forge",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        4,
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "architecture",
+      "rationale": "Stateless \u2014 generates VS Code config files for Turborepo monorepos",
+      "status": "implemented"
+    },
+    {
+      "id": 26,
+      "original_name": "data-visualization-architect",
+      "openai_name": "data_visualization_agent",
+      "type": "agent",
+      "cluster": "Real-Time & Data",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Data viz requires multi-step chart type selection + streaming + accessibility design",
+      "status": "implemented"
+    },
+    {
+      "id": 27,
+      "original_name": "prompt-engineering-architect",
+      "openai_name": "prompt_engineering_agent",
+      "type": "agent",
+      "cluster": "Application Layer",
+      "tiers": [
+        5
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Prompt engineering requires iterative before/after design + eval strategy",
+      "status": "implemented"
+    },
+    {
+      "id": 28,
+      "original_name": "release-incident-operations-architect",
+      "openai_name": "release_incident_ops",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "release_tooling",
+      "rationale": "Stateless runbook generation \u2014 input incident type, output procedures",
+      "status": "implemented"
+    },
+    {
+      "id": 29,
+      "original_name": "git-workflow-architect",
+      "openai_name": "git_workflow_architect",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "release_tooling",
+      "rationale": "Stateless \u2014 generates git config, commitlint, hooks",
+      "status": "implemented"
+    },
+    {
+      "id": 30,
+      "original_name": "vscode-cognitive-os",
+      "openai_name": "vscode_cognitive_os",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "release_tooling",
+      "rationale": "Stateless VS Code config generation by developer role",
+      "status": "implemented"
+    },
+    {
+      "id": 31,
+      "original_name": "vscode-ai-agent-stack",
+      "openai_name": "vscode_ai_agent_stack",
+      "type": "tool",
+      "cluster": "Editor & Environment",
+      "tiers": [
+        6
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "release_tooling",
+      "rationale": "Stateless \u2014 generates .cursorrules or AGENTS.md for specific IDE agents",
+      "status": "implemented"
+    },
+    {
+      "id": 32,
+      "original_name": "design-token-system-architect",
+      "openai_name": "design_token_system_architect",
+      "type": "tool",
+      "cluster": "Frontend Design",
+      "tiers": [
+        7
+      ],
+      "file": "tools/namespaces.py",
+      "namespace": "ux_motion",
+      "rationale": "Stateless \u2014 generates CSS custom properties and Tailwind v4 config",
+      "status": "implemented"
+    },
+    {
+      "id": 33,
+      "original_name": "elite-skill-forge",
+      "openai_name": "elite_skill_forge_agent",
+      "type": "agent",
+      "cluster": "Mobile & Meta",
+      "tiers": [
+        "meta"
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Meta-agent: generates new skill definitions \u2014 requires multi-step reasoning",
+      "status": "implemented"
+    },
+    {
+      "id": 34,
+      "original_name": "frontend-product-design-architect (deep variant)",
+      "openai_name": "frontend_design_deep_agent",
+      "type": "agent",
+      "cluster": "Frontend Design",
+      "tiers": [
+        4,
+        7
+      ],
+      "file": "nexus_agents/specialists.py",
+      "rationale": "Distinct deep-review design specialist; removes the duplicate registry key from v2.1.",
+      "status": "implemented"
+    }
+  ],
+  "summary": {
+    "total_skills": 34,
+    "tools": 14,
+    "agents": 20,
+    "namespaces": 8,
+    "tier_groups": {
+      "T1": [
+        "security_hardening_agent",
+        "backend_systems_auditor_agent",
+        "taxbridge_compliance_agent"
+      ],
+      "T2": [
+        "testing_strategy_agent",
+        "typescript_config_surgeon",
+        "component_quality_gate",
+        "effect_ts_layer_agent",
+        "backend_domain_model_agent",
+        "api_contract_governance_agent"
+      ],
+      "T3": [
+        "nextjs_performance_agent",
+        "edge_cache_architect",
+        "otel_observability_agent",
+        "real_time_systems_agent",
+        "vscode_debug_profiler",
+        "bullmq_job_agent"
+      ],
+      "T4": [
+        "frontend_design_agent",
+        "accessibility_architect",
+        "motion_performance_architect",
+        "motion_interaction_architect",
+        "multi_agent_orchestration_agent",
+        "ai_feature_agent",
+        "prisma_database_agent",
+        "api_automation_architect",
+        "react_native_expo_agent",
+        "vscode_monorepo_forge",
+        "data_visualization_agent"
+      ],
+      "T5": [
+        "prompt_engineering_agent",
+        "ai_feature_agent",
+        "multi_agent_orchestration_agent"
+      ],
+      "T6": [
+        "release_incident_ops",
+        "git_workflow_architect",
+        "vscode_cognitive_os",
+        "vscode_ai_agent_stack",
+        "vscode_debug_profiler"
+      ],
+      "T7": [
+        "frontend_design_agent",
+        "accessibility_architect",
+        "component_quality_gate",
+        "motion_performance_architect",
+        "motion_interaction_architect",
+        "design_token_system_architect",
+        "data_visualization_agent"
+      ],
+      "T8": [
+        "taxbridge_compliance_agent",
+        "backend_domain_model_agent"
+      ]
+    },
+    "implemented_tools": 14,
+    "missing_tool_slots_from_v2_1_report": 2,
+    "tool_count_reconciliation": "The v2.1 report claimed 16 but named and implemented only 14. No unnamed APIs were fabricated."
+  }
+}

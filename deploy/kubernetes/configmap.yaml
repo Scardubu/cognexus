@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cognexus-config
+  namespace: cognexus
+data:
+  NEXUS_ENV: production
+  NEXUS_LOG_LEVEL: INFO
+  NEXUS_HOST: 0.0.0.0
+  NEXUS_PORT: "8000"
+  NEXUS_WORKERS: "1"
+  # Replace with the exact ingress/controller source CIDR through an environment overlay.
+  NEXUS_FORWARDED_ALLOW_IPS: 127.0.0.1
+  NEXUS_GRACEFUL_SHUTDOWN_SECONDS: "30"
+  NEXUS_HTTP_CONCURRENCY_LIMIT: "100"
+  NEXUS_HTTP_BACKLOG: "256"
+  NEXUS_SESSION_BACKEND: redis
+  NEXUS_ALLOW_SQLITE_FALLBACK: "false"
+  NEXUS_ALLOW_STATELESS_FALLBACK: "false"
+  NEXUS_MODEL_VALIDATION_MODE: warn
+  NEXUS_OTEL_ENABLED: "true"
+  NEXUS_ENABLE_DOCS: "false"
+  NEXUS_MAX_REQUEST_BYTES: "262144"
+  TRACE_INCLUDE_SENSITIVE: "false"
+  OPENAI_AGENTS_TRACE_INCLUDE_SENSITIVE_DATA: "false"

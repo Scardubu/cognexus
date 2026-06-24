@@ -1,0 +1,421 @@
+schema_version: '1.0'
+release: 3.3.1
+canonical_root: .agents/skills
+skill_count: 39
+skills:
+- name: accessibility-system-architect
+  description: Designs accessibility as a system rather than a final audit. Use when a task requires accessibility system
+    architect analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not
+    mentioned.
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/accessibility-system-architect/SKILL.md
+  version: 3.3.0
+  sha256: 11805714c61c11b926a582922e4cf25540a28958a3564ed1a97eb5e0a2493200
+  source_path: Skills/SCAR Skills v2/skills_enhanced/accessibility-system-architect/SKILL.md
+- name: agent-prompt-upgrade
+  description: Upgrades, refines, and version-bumps AI agent system prompts, cognitive OS configs, and multi-agent orchestration
+    prompt layers using IEP-ELITE patterns, structured reasoning frameworks, and SCAR engineering philosophy. Use when a task
+    requires agent prompt upgrade analysis, design, implementation, audit, debugging, or production hardening, even when the
+    skill name is not mentioned.
+  category: ai-engineering
+  risk: low
+  path: .agents/skills/agent-prompt-upgrade/SKILL.md
+  version: 3.3.0
+  sha256: 377f8d66937020ba18c960117ba40b999dc2b75ab08f61f31a61823fa355e865
+  source_path: Skills/agent-prompt-upgrade.skill
+- name: ai-feature-architect
+  description: 'Designs and implements production AI features using Vercel AI SDK v6: streaming chat, tool calling, structured
+    output, RAG pipelines with pgvector, multi-model routing, and AI gateway patterns. Use when a task requires ai feature
+    architect analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not
+    mentioned.'
+  category: ai-engineering
+  risk: low
+  path: .agents/skills/ai-feature-architect/SKILL.md
+  version: 3.3.0
+  sha256: 28025813c0278c697321dfb6c94e91b2511e2649b3b4c7efaac7001c9ad009d8
+  source_path: Skills/ai-feature-architect.skill
+- name: api-automation-architect
+  description: Designs and generates production-grade API automation workflows with idempotency guarantees, retry logic, circuit
+    breakers, structured error handling, and OpenTelemetry-style observability. Use when a task requires api automation architect
+    analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/api-automation-architect/SKILL.md
+  version: 3.3.0
+  sha256: 31692d5322ef702d531ae28d8150484d886a2df994ac4841ab9538ba0e17bc3f
+  source_path: Skills/api-automation-architect.skill
+- name: api-contract-governance-architect
+  description: Defines and governs API contracts with contract-first discipline, explicit schemas, compatibility strategy,
+    idempotency rules, deterministic errors, pagination policy, and safe deprecation. Use when designing or reviewing REST,
+    webhook, or service contracts and preventing accidental breaking changes.
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/api-contract-governance-architect/SKILL.md
+  version: 3.3.0
+  sha256: f3e6f50e040310e998be199a3cc4ded3d31deef62db830631be323e9ef980d6f
+  source_path: Skills/Skills_Enhanced 2.zip!/Skills/ai-skills.zip!/api-contract-governance-architect.skill
+- name: backend-domain-model-architect
+  description: Shapes business logic into bounded contexts, aggregates, invariants, and explicit use cases using Effect-TS
+    for typed service composition. Use when a task requires backend domain model architect analysis, design, implementation,
+    audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/backend-domain-model-architect/SKILL.md
+  version: 3.3.0
+  sha256: 73099ad0cd3ae7ce46136fb907326625dbb6538794360cf7d0bec160858eefc7
+  source_path: Skills/SCAR Skills v2/skills_enhanced/backend-domain-model-architect/SKILL.md
+- name: backend-systems-auditor
+  description: 'Audits backend architectures, APIs, and service designs against production-grade engineering standards: idempotency
+    contracts, observability-first design (traces/metrics/logs), graceful shutdown sequences, database migration discipline
+    (expand-migrate-contract), and event sourcing correctness. Use when a task requires backend systems auditor analysis,
+    design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.'
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/backend-systems-auditor/SKILL.md
+  version: 3.3.0
+  sha256: 627cc826b19d22f47213f4f029a2ebd16507caf18e35d71ee7fc96de6d77c6ce
+  source_path: Skills/backend-systems-auditor.skill
+- name: bullmq-job-architect
+  description: 'Designs and implements production-grade BullMQ job queues with Redis: queue isolation, worker concurrency
+    sizing, rate limiting, dead letter queues, job flows, priority lanes, graceful shutdown, and Bull Board monitoring. Use
+    when a task requires bullmq job architect analysis, design, implementation, audit, debugging, or production hardening,
+    even when the skill name is not mentioned.'
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/bullmq-job-architect/SKILL.md
+  version: 3.3.0
+  sha256: db4ef9431eb3c630c9ee250dffb82a8c66b08bc6f433ae4fcba81edad15ae429
+  source_path: Skills/bullmq-job-architect.skill
+- name: codebase-zip-audit
+  description: Extracts, audits, and surgically patches a Next.js / TypeScript / React production codebase uploaded as a zip
+    file. Use when a task requires codebase zip audit analysis, design, implementation, audit, debugging, or production hardening,
+    even when the skill name is not mentioned.
+  category: developer-tooling
+  risk: medium
+  path: .agents/skills/codebase-zip-audit/SKILL.md
+  version: 3.3.0
+  sha256: e83774b2e63204e5a704437ea04b1b86d116119cb1701a044f6d5cc3f713b790
+  source_path: Skills/files/codebase-zip-audit/SKILL.md
+- name: component-quality-gate
+  description: Runs a comprehensive quality gate on frontend components covering accessibility (WCAG AA), performance (Core
+    Web Vitals impact), testability, Storybook story generation, and TypeScript prop contract correctness. Use when a task
+    requires component quality gate analysis, design, implementation, audit, debugging, or production hardening, even when
+    the skill name is not mentioned.
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/component-quality-gate/SKILL.md
+  version: 3.3.0
+  sha256: c81bd47af354629fc3e4cd564b215a78342dbdba19230f01afa0f0060d024771
+  source_path: Skills/component-quality-gate.skill
+- name: data-visualization-architect
+  description: Designs and implements production-grade data visualizations for dashboards, analytics surfaces, and reporting
+    UIs. Covers Recharts patterns, D3 custom visualizations, chart accessibility (screen reader equivalents, color-blind safe
+    palettes), responsive chart design, SabiScore sports ML intelligence display, TaxBridge financial reporting charts, and.
+    Use when a task requires data visualization architect analysis, design, implementation, audit, debugging, or production
+    hardening, even when the skill name is not mentioned.
+  category: quality-observability
+  risk: low
+  path: .agents/skills/data-visualization-architect/SKILL.md
+  version: 3.3.0
+  sha256: 8bdab5d7d612554d4856c254b71d2347a2599326ecc67eb7beb989efcc20c51c
+  source_path: Skills/SCAR Skills v2/skills_new/data-visualization-architect/SKILL.md
+- name: design-token-system-architect
+  description: 'Designs and generates complete design token systems: CSS custom properties, semantic token layers, Tailwind
+    CSS configuration, dark mode strategy, and component-level token application. Use when a task requires design token system
+    architect analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not
+    mentioned.'
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/design-token-system-architect/SKILL.md
+  version: 3.3.0
+  sha256: 227b807856b5d324ea98b70a80ec55eaeded42115d663733ec0847ebba0caeda
+  source_path: Skills/design-token-system-architect.skill
+- name: edge-cache-architecture-architect
+  description: Designs explicit, measurable, and privacy-safe caching and rendering architectures for Next.js, serverless,
+    CDN, and edge environments. Use when choosing static, dynamic, ISR, PPR, route-handler, middleware, personalization, invalidation,
+    or cache-key strategies.
+  category: frontend-experience
+  risk: medium
+  path: .agents/skills/edge-cache-architecture-architect/SKILL.md
+  version: 3.3.0
+  sha256: 91ef88b6ba790e3d7dfe18591a5a153434939c9c6f8726ebe4691cedd4a87c29
+  source_path: Skills/Skills_Enhanced 2.zip!/Skills/ai-skills.zip!/edge-cache-architecture-architect.skill
+- name: effect-ts-layer-architect
+  description: Designs, audits, and generates production-grade Effect-TS code using correct Layer discipline, Fiber supervision,
+    structured concurrency, and acquireRelease lifecycle patterns. Use when a task requires effect ts layer architect analysis,
+    design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/effect-ts-layer-architect/SKILL.md
+  version: 3.3.0
+  sha256: 63ea1b1220aafa59b4f008660623357e8811855f0a67b3d044b1c86a4206dd2d
+  source_path: Skills/effect-ts-layer-architect.skill
+- name: elite-skill-forge
+  description: Generates elite, production-ready Claude skills (SKILL.md files) from a domain, workflow, or intent description.
+    Use when a task requires elite skill forge analysis, design, implementation, audit, debugging, or production hardening,
+    even when the skill name is not mentioned.
+  category: ai-engineering
+  risk: low
+  path: .agents/skills/elite-skill-forge/SKILL.md
+  version: 3.3.0
+  sha256: a5282f8146606b1bf68096a688b177323c7d0b3f2b6e588adeb46be63567061e
+  source_path: Skills/SCAR Skills v2/skills_enhanced/elite-skill-forge/SKILL.md
+- name: frontend-design-auditor
+  description: Audits and elevates web UI designs and frontend components to production-grade quality using Gestalt principles,
+    WCAG AA accessibility standards, design token governance, and micro-interaction patterns inspired by Linear, Stripe, and
+    Vercel. Use when a task requires frontend design auditor analysis, design, implementation, audit, debugging, or production
+    hardening, even when the skill name is not mentioned.
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/frontend-design-auditor/SKILL.md
+  version: 3.3.0
+  sha256: c4506074aec44eed01e56392ce70835bcab001d5e2b1ef350477861994cb6b3b
+  source_path: Skills/frontend-design-auditor.skill
+- name: frontend-product-design-architect
+  description: Shapes premium frontend experiences through information architecture, content hierarchy, responsive layout,
+    brand expression, and conversion-aware interaction design. Use when a task requires frontend product design architect
+    analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/frontend-product-design-architect/SKILL.md
+  version: 3.3.0
+  sha256: 04873a9c936143157c284a8e966f89d4453ce80e9e908bf30094f61bbf84d551
+  source_path: Skills/SCAR Skills v2/skills_enhanced/frontend-product-design-architect/SKILL.md
+- name: git-workflow-architect
+  description: 'Designs and generates complete Git workflow configurations: branch strategies, conventional commit setups
+    (commitlint + commitizen + husky), PR templates, GitLens configuration, GitHub Actions CI workflows, and semantic release
+    pipelines. Use when a task requires git workflow architect analysis, design, implementation, audit, debugging, or production
+    hardening, even when the skill name is not mentioned.'
+  category: developer-tooling
+  risk: high
+  path: .agents/skills/git-workflow-architect/SKILL.md
+  version: 3.3.0
+  sha256: 75cd42e418d3ad042988f0423ed092614830cc64281ec89bd50c48e58306f882
+  source_path: Skills/git-workflow-architect.skill
+- name: motion-interaction-architect
+  description: 'Designs and implements production-grade motion systems for web using Framer Motion: animation tokens, page
+    transitions, gesture interactions, scroll-driven animations, layout animations, reduced-motion accessibility, and component
+    choreography. Use when a task requires motion interaction architect analysis, design, implementation, audit, debugging,
+    or production hardening, even when the skill name is not mentioned.'
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/motion-interaction-architect/SKILL.md
+  version: 3.3.0
+  sha256: 630dcb538f780e02223430c88d5593441b07cd3553ee4dd49e69020ea953ede6
+  source_path: Skills/motion-interaction-architect.skill
+- name: motion-performance-architect
+  description: Defines motion strategy, performance budgets, compositor rules, and anti-pattern detection for animation-heavy
+    frontends. Use when a task requires motion performance architect analysis, design, implementation, audit, debugging, or
+    production hardening, even when the skill name is not mentioned.
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/motion-performance-architect/SKILL.md
+  version: 3.3.0
+  sha256: f8e8e2759f939fe2ff3facff5029c818ab15cc25d5f543c575d819986586721b
+  source_path: Skills/SCAR Skills v2/skills_enhanced/motion-performance-architect/SKILL.md
+- name: multi-agent-orchestration-architect
+  description: Designs, implements, and audits multi-agent AI orchestration systems with BullMQ job chains, LLM routing, tool
+    registries, agent state machines, and prompt injection defenses. Use when a task requires multi agent orchestration architect
+    analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: ai-engineering
+  risk: medium
+  path: .agents/skills/multi-agent-orchestration-architect/SKILL.md
+  version: 3.3.0
+  sha256: d0180dd4db68c4e5c78e6ecfbc959269152d5676fbf4930dc1b3d1584094a2d0
+  source_path: Skills/SCAR Skills v2/skills_new/multi-agent-orchestration-architect/SKILL.md
+- name: nextjs-performance-architect
+  description: 'Audits and optimizes Next.js applications for maximum performance: RSC-first architecture, Partial Prerendering
+    (PPR), caching strategy, Turbopack migration, bundle analysis, and Core Web Vitals. Use when a task requires nextjs performance
+    architect analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not
+    mentioned.'
+  category: quality-observability
+  risk: low
+  path: .agents/skills/nextjs-performance-architect/SKILL.md
+  version: 3.3.0
+  sha256: a16b48c12ad6749730f9a17d9d605c1cf915b480aefdc91151992ec3be4ce893
+  source_path: Skills/nextjs-performance-architect.skill
+- name: nigerian-fintech-compliance-architect
+  description: 'Implements Nigerian regulatory compliance for fintech products: FIRS e-invoicing integration (Phase 1-3),
+    VAT/CIT/WHT computation across 22 rate codes, NRS 2026 VAIDS compliance, BVN/NIN identity validation, NIBSS payment gateway
+    patterns, NDPR data handling, and Lagos Pidgin as a first-class i18n locale. Use when a task requires nigerian fintech
+    compliance architect analysis, design, implementation, audit, debugging, or production hardening, even when the skill
+    name is not mentioned.'
+  category: security-compliance
+  risk: high
+  path: .agents/skills/nigerian-fintech-compliance-architect/SKILL.md
+  version: 3.3.0
+  sha256: 8207ecfa6ece7c3e5ef8c6a564d41128c1bded53eb2cc1c7d4d025a7cdbf4095
+  source_path: Skills/SCAR Skills v2/skills_new/nigerian-fintech-compliance-architect/SKILL.md
+- name: opentelemetry-observability-architect
+  description: 'Designs and implements complete OpenTelemetry observability pipelines for Node.js applications: auto-instrumentation
+    for Fastify, Prisma, BullMQ, and HTTP clients; custom spans for business logic; RED metrics; structured logging with trace
+    correlation; and OTLP export configuration. Use when a task requires opentelemetry observability architect analysis, design,
+    implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.'
+  category: quality-observability
+  risk: low
+  path: .agents/skills/opentelemetry-observability-architect/SKILL.md
+  version: 3.3.0
+  sha256: 787bf96a1cebac1b5db488dede76f809cfa77f8dca6136fe287617594d20e6f6
+  source_path: Skills/opentelemetry-observability-architect.skill
+- name: portfolio-conviction-engine
+  description: 'Analyzes, audits, and surgically elevates developer portfolio sites and their governing spec documents to
+    maximize trust and conversion for dual audiences: technical evaluators (engineers, CTOs, hiring managers) and non-technical
+    decision-makers (founders, investors, PMs). Use when a task requires portfolio conviction engine analysis, design, implementation,
+    audit, debugging, or production hardening, even when the skill name is not mentioned.'
+  category: frontend-experience
+  risk: low
+  path: .agents/skills/portfolio-conviction-engine/SKILL.md
+  version: 3.3.0
+  sha256: 0d67c9d1c5d25dc2a2de3fdfad0b9847f9bddf472b64f1bc3447471ba5354fb3
+  source_path: Skills/portfolio-conviction-engine.skill
+- name: prisma-database-architect
+  description: Designs, audits, and optimizes Prisma schemas, migrations, queries, and connection pooling for production PostgreSQL
+    deployments. Use when a task requires prisma database architect analysis, design, implementation, audit, debugging, or
+    production hardening, even when the skill name is not mentioned.
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/prisma-database-architect/SKILL.md
+  version: 3.3.0
+  sha256: e96405d641826e8288dbbc24f937a601202de4fa2b1c14bbd8824bf5c296293d
+  source_path: Skills/prisma-database-architect.skill
+- name: prompt-engineering-architect
+  description: 'Designs, audits, and optimizes prompts for AI features embedded in applications: system prompts, few-shot
+    examples, chain-of-thought instructions, structured output prompts, RAG context injection, tool descriptions, and multi-turn
+    conversation design. Use when a task requires prompt engineering architect analysis, design, implementation, audit, debugging,
+    or production hardening, even when the skill name is not mentioned.'
+  category: ai-engineering
+  risk: low
+  path: .agents/skills/prompt-engineering-architect/SKILL.md
+  version: 3.3.0
+  sha256: a4b8fb59e7c4df8a4ffe70bca5358a9ed3d1ce4e3b1938cc025ae4815552c7f7
+  source_path: Skills/prompt-engineering-architect.skill
+- name: react-native-expo-architect
+  description: 'Designs and audits Expo SDK 54+ React Native applications using the New Architecture: TurboModules, Fabric
+    renderer, Reanimated v4 (worklets), EAS Build configuration, Expo Router v4, shared code patterns with Next.js web apps,
+    and production deployment via EAS. Use when a task requires react native expo architect analysis, design, implementation,
+    audit, debugging, or production hardening, even when the skill name is not mentioned.'
+  category: mobile
+  risk: low
+  path: .agents/skills/react-native-expo-architect/SKILL.md
+  version: 3.3.0
+  sha256: 057717c312b09f30a9715f2867177116e295db8b6d9ca85ff27b420f375cf7fe
+  source_path: Skills/react-native-expo-architect.skill
+- name: real-time-systems-architect
+  description: 'Designs and implements production-grade real-time systems: WebSocket and SSE architectures, presence/collaboration
+    patterns, optimistic UI with rollback, BullMQ job progress streaming, SwarmX agent status feeds, and race condition handling.
+    Use when a task requires real time systems architect analysis, design, implementation, audit, debugging, or production
+    hardening, even when the skill name is not mentioned.'
+  category: backend-platform
+  risk: medium
+  path: .agents/skills/real-time-systems-architect/SKILL.md
+  version: 3.3.0
+  sha256: 9dac159c3630022ca4dfe3f38d4323493e79be8a7793a2e31965b858c8028515
+  source_path: Skills/SCAR Skills v2/skills_new/real-time-systems-architect/SKILL.md
+- name: release-incident-operations-architect
+  description: Designs observable, reversible release and incident workflows using staged delivery, migration safety, kill
+    switches, rollback plans, SLO-linked monitoring, and blameless learning. Use for canaries, feature flags, release gates,
+    incident response, and post-release validation.
+  category: release-tooling
+  risk: medium
+  path: .agents/skills/release-incident-operations-architect/SKILL.md
+  version: 3.3.0
+  sha256: ba9ba410f1d52027b578534879ea852930043cf81364cceda42c15c33901084b
+  source_path: Skills/Skills_Enhanced 2.zip!/Skills/ai-skills.zip!/release-incident-operations-architect.skill
+- name: security-hardening-auditor
+  description: 'Audits and hardens full-stack Next.js and Node.js applications against OWASP Top 10: authentication with Auth.js
+    v5, authorization patterns, Content Security Policy headers, API rate limiting, CORS configuration, input validation,
+    SQL injection prevention, XSS protection, CSRF defense, and secrets management. Use when a task requires security hardening
+    auditor analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.'
+  category: security-compliance
+  risk: high
+  path: .agents/skills/security-hardening-auditor/SKILL.md
+  version: 3.3.0
+  sha256: d5a460cdfb594e6ebeab4e400433da31050e3d6fba1cb5315d9520b81534ae4d
+  source_path: Skills/security-hardening-auditor.skill
+- name: shell-cognitive-os
+  description: Performs a deep static audit and surgical correction of zsh/bash shell configuration files, producing a production-grade,
+    bug-free, performance-optimized shell OS output. Use when a task requires shell cognitive os analysis, design, implementation,
+    audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: developer-tooling
+  risk: high
+  path: .agents/skills/shell-cognitive-os/SKILL.md
+  version: 3.3.0
+  sha256: 9008c8cd4fa93fba7ddf1f0503f0b5fd24d0feaf1dea8cc73c21090e1452622b
+  source_path: Skills/shell-cognitive-os.skill
+- name: surgical-merge
+  description: Performs an exhaustive multi-version file or bundle comparison, produces a definitive production-ready merged
+    output, and emits a structured audit trail with prioritized change log. Use when a task requires surgical merge analysis,
+    design, implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: developer-tooling
+  risk: high
+  path: .agents/skills/surgical-merge/SKILL.md
+  version: 3.3.0
+  sha256: f475ef27c3626149f527ab68a5ed675719fc4f746f45754bb43d858eefbb2e24
+  source_path: Skills/surgical-merge.skill
+- name: testing-strategy-architect
+  description: 'Designs and implements comprehensive testing strategies for full-stack applications: Vitest unit tests, React
+    Testing Library component tests, MSW API mocking, Playwright e2e tests, test pyramid design, coverage thresholds, and
+    CI integration. Use when a task requires testing strategy architect analysis, design, implementation, audit, debugging,
+    or production hardening, even when the skill name is not mentioned.'
+  category: quality-observability
+  risk: low
+  path: .agents/skills/testing-strategy-architect/SKILL.md
+  version: 3.3.0
+  sha256: 73fee5e5c3e5a14e2c8e0fb035c83c7a01c8d222283b4057141307b29601acf6
+  source_path: Skills/testing-strategy-architect.skill
+- name: typescript-config-surgeon
+  description: 'Surgically audits and generates tsconfig.json, ESLint flat config, Prettier config, and their integration
+    for TypeScript strict mode projects. Diagnoses and fixes common misconfigurations: wrong moduleResolution, path alias
+    issues, slow type-checking, ESLint and Prettier conflicts, and monorepo project references. Use when a task requires typescript
+    config surgeon analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is
+    not mentioned.'
+  category: quality-observability
+  risk: low
+  path: .agents/skills/typescript-config-surgeon/SKILL.md
+  version: 3.3.0
+  sha256: c030b0c8d9eff8aa2c3fed3fcd2fac97939aaaca60006d20099b41bf07d3369e
+  source_path: Skills/typescript-config-surgeon.skill
+- name: vscode-ai-agent-stack
+  description: Designs, configures, and documents a production-grade AI coding agent stack for VS Code, combining Claude Code
+    (terminal-native agentic), GitHub Copilot (IDE-integrated completions), and Cline/Continue.dev (bring-your-own-key agent).
+    Use when a task requires vscode ai agent stack analysis, design, implementation, audit, debugging, or production hardening,
+    even when the skill name is not mentioned.
+  category: ai-engineering
+  risk: low
+  path: .agents/skills/vscode-ai-agent-stack/SKILL.md
+  version: 3.3.0
+  sha256: cc88360b5e4fd20f5e4fefd1c938d56629ebaf09f7736ca441e6e259f8efdf94
+  source_path: Skills/vscode-ai-agent-stack.skill
+- name: vscode-cognitive-os
+  description: Transforms VS Code into a high-performance cognitive workspace by auditing and generating settings.json, keybindings,
+    extension recommendations, and theme configurations. Use when a task requires vscode cognitive os analysis, design, implementation,
+    audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: developer-tooling
+  risk: low
+  path: .agents/skills/vscode-cognitive-os/SKILL.md
+  version: 3.3.0
+  sha256: 1a61696556764a01f9888bb298f5dc00e0d95ff41a55935dca157d4db62a1749
+  source_path: Skills/vscode-cognitive-os.skill
+- name: vscode-debug-profiler
+  description: Configures and guides VS Code debugging and performance profiling for Node.js, Fastify, Next.js, and frontend
+    applications. Generates launch.json configurations, explains CPU and memory profiling workflows, identifies performance
+    bottlenecks, and documents advanced debugger features. Use when a task requires vscode debug profiler analysis, design,
+    implementation, audit, debugging, or production hardening, even when the skill name is not mentioned.
+  category: developer-tooling
+  risk: low
+  path: .agents/skills/vscode-debug-profiler/SKILL.md
+  version: 3.3.0
+  sha256: 1f1e0424a2dad40156937361a1e787cde47c4ec4c2de270ca00d6d2332bc9aad
+  source_path: Skills/vscode-debug-profiler.skill
+- name: vscode-monorepo-forge
+  description: 'Generates complete VS Code multi-root workspace configurations for monorepos: .code-workspace files, per-package
+    settings.json, launch.json debug configs, tasks.json, and turbo.json pipeline definitions. Use when a task requires vscode
+    monorepo forge analysis, design, implementation, audit, debugging, or production hardening, even when the skill name is
+    not mentioned.'
+  category: developer-tooling
+  risk: low
+  path: .agents/skills/vscode-monorepo-forge/SKILL.md
+  version: 3.3.0
+  sha256: 32b49c71231179a4f4be5d78239a15c332dd803252a4a94ec0fa73e60d67b326
+  source_path: Skills/vscode-monorepo-forge.skill

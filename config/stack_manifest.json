@@ -1,0 +1,136 @@
+{
+  "version": "3.3.1",
+  "last_updated": "2026-06-24",
+  "description": "Immutable project stack manifest. Never suggest replacing or downgrading these versions.",
+  "project_stack": {
+    "frontend": {
+      "framework": "nextjs",
+      "version": "15",
+      "react": "19",
+      "rsc_required": true,
+      "styling": "tailwindcss-v4",
+      "streaming_preferred": true
+    },
+    "mobile": {
+      "framework": "react-native",
+      "runtime": "expo-sdk-54",
+      "animation": "reanimated-v4",
+      "build": "eas"
+    },
+    "backend": {
+      "framework": "fastify",
+      "version": "5",
+      "fp_layer": "effect-ts",
+      "queue": "bullmq",
+      "cache": "redis",
+      "bullmq_constraint": "separate_ioredis_per_role"
+    },
+    "database": {
+      "primary": "postgresql",
+      "orm": "prisma-5",
+      "vector": "pgvector"
+    },
+    "monorepo": {
+      "build": "turborepo",
+      "package_manager": "pnpm-workspaces"
+    },
+    "observability": {
+      "standard": "opentelemetry",
+      "export_protocol": "otlp",
+      "logging": "structured"
+    },
+    "auth": {
+      "library": "authjs-v5"
+    },
+    "ai_agents": {
+      "sdk": "vercel-ai-sdk-v6",
+      "local_inference": "ollama",
+      "orchestration": "swarmx",
+      "swarmx_constraint": "stateless_between_turns"
+    }
+  },
+  "constraints": {
+    "ARCH-01": "No unnecessary rewrites \u2014 optimize incrementally unless the system is broken",
+    "ARCH-02": "Preserve architecture unless an explicit rewrite is requested",
+    "ARCH-03": "Maintain Next.js 15 + React 19 compatibility at all times",
+    "ARCH-04": "Prefer RSC + streaming patterns over client-side data fetching",
+    "ARCH-05": "Effect-TS Layer discipline is mandatory for all backend services",
+    "ARCH-06": "BullMQ workers must use separate ioredis connections per role (Queue / Worker / QueueEvents)",
+    "ARCH-07": "maxTsServerMemory must not exceed 3072",
+    "ARCH-08": "Edge Runtime routes must not use Node.js-only modules (no jsonwebtoken)",
+    "ARCH-09": "SwarmX agents must be stateless between turns \u2014 no in-memory state persistence",
+    "ARCH-10": "TaxBridge financial operations require idempotency keys on every write"
+  },
+  "applications": {
+    "TaxBridge": {
+      "domain": "Nigerian SME tax compliance",
+      "tax_types": [
+        "VAT",
+        "CIT",
+        "WHT"
+      ],
+      "integrations": [
+        "FIRS e-invoicing",
+        "NRS 2026"
+      ],
+      "critical_constraints": [
+        "ARCH-10"
+      ],
+      "observability": {
+        "firs_latency_metric": "firs_api_call_duration",
+        "firs_p99_sla_ms": 3000,
+        "required_log_fields": [
+          "timestamp",
+          "invoice_id",
+          "status",
+          "latency_ms"
+        ]
+      }
+    },
+    "SabiScore": {
+      "domain": "Sports ML intelligence and data visualization platform",
+      "critical_constraints": [],
+      "observability": {
+        "ml_pipeline_integrity": true,
+        "real_time_data_freshness": true
+      }
+    },
+    "Hashablanca": {
+      "domain": "Encrypted blockchain data analytics",
+      "critical_constraints": [],
+      "observability": {
+        "audit_trail_required": true,
+        "cryptographic_correctness": true
+      }
+    },
+    "SwarmX": {
+      "domain": "Local multi-agent AI orchestration",
+      "agent_count": 30,
+      "control_plane_layers": 7,
+      "queue": "bullmq",
+      "critical_constraints": [
+        "ARCH-09"
+      ],
+      "observability": {
+        "trace_propagation_required": true,
+        "llm_call_spans_required": true
+      }
+    }
+  },
+  "nexus_runtime": {
+    "python": ">=3.11,<3.15",
+    "openai_agents": "0.17.6",
+    "openai_python": "2.43.0",
+    "http": "FastAPI 0.138.0 + Uvicorn",
+    "sessions": [
+      "RedisSession production",
+      "AsyncSQLiteSession local fallback",
+      "explicit stateless only"
+    ],
+    "compaction": "OpenAIResponsesCompactionSession",
+    "observability": "OpenTelemetry + Prometheus + structured JSON logs",
+    "configuration": "Pydantic Settings v2",
+    "performance": "bounded RunGate + per-session ordering + cached definitions",
+    "trace_sensitive_data": false
+  }
+}

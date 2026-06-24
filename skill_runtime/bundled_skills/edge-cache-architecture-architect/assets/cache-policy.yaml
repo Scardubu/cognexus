@@ -1,0 +1,34 @@
+policy_version: 1
+classifications:
+  public_immutable:
+    cache_control: public, max-age=31536000, immutable
+  public_revalidatable:
+    cache_control: public, max-age=60, stale-while-revalidate=300, stale-if-error=600
+  private_user_scoped:
+    cache_control: private, no-store
+  sensitive:
+    cache_control: private, no-store
+  mutation:
+    cache_control: no-store
+cache_key:
+  canonical_path: true
+  normalized_query: true
+  supported_vary_headers: [Accept-Encoding, Accept-Language]
+  tenant_boundary_required: true
+  authorization_scope_required_for_private_cache: true
+  unbounded_headers_forbidden: true
+invalidation:
+  versioned_namespace: true
+  update_delete_permission_paths_tested: true
+  global_purge_not_only_rollback: true
+origin_protection:
+  request_coalescing: true
+  stale_if_error: true
+  per_key_concurrency_limit: 20
+observability:
+  required_metrics: [hit_ratio, origin_latency, origin_error_rate, purge_latency, stale_serves, evictions]
+gates:
+  cross_tenant_collision_test: true
+  cache_poisoning_test: true
+  authorization_bypass_test: true
+  origin_failure_test: true
