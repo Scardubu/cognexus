@@ -24,18 +24,20 @@ chmod +x scripts/setup.sh
 ./scripts/setup.sh
 ```
 
-`bootstrap.py` checks the supported Python range, verifies package-index DNS and HTTPS
-reachability before pip runs, creates `.venv`, installs against the certified runtime
-constraints, verifies the environment, and creates local configuration directories. It also
-supports approved proxies, private package indexes, and offline wheelhouses. `setup.sh` adds
-the complete quality gate, smoke test, and distribution build.
+`bootstrap.py` checks the supported Python range, verifies DNS and HTTPS reachability for
+each configured primary or extra package index before pip runs, creates `.venv`, installs
+against the certified runtime constraints, verifies the environment, and creates local
+configuration directories. Diagnostics redact package-index credentials. It also supports
+approved proxies, private package indexes, and deterministic offline wheelhouses.
+`setup.sh` and `make bootstrap` delegate to this same hardened path. `setup.sh` then runs the
+complete local quality and release gate.
 
 ## Manual developer setup
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade "pip>=26,<27"
+python -m pip install --upgrade "pip>=26,<27" -c constraints/runtime.txt
 python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 python -m pip check
 cp .env.example .env
@@ -92,7 +94,7 @@ ruff format --check .
 mypy .
 pytest --cov --cov-report=term-missing
 python scripts/test_nexus.py --dry-run
-python -m build
+python scripts/build_distribution.py --no-isolation
 ```
 
 The smoke command writes machine-readable JSON to stdout and diagnostics to stderr.

@@ -1,5 +1,6 @@
 PYTHON ?= python3
 VENV ?= .venv
+BOOTSTRAP_ARGS ?=
 BIN := $(VENV)/bin
 
 .PHONY: help bootstrap lint format type test validate verify-version verify-runtime-lock smoke server build verify-dist audit quality quality-quick skills-package release-checksums release-manifest clean
@@ -27,10 +28,7 @@ help:
 	  'clean           Remove generated artifacts and caches'
 
 bootstrap:
-	$(PYTHON) -m venv $(VENV)
-	$(BIN)/python -m pip install "pip>=26,<27"
-	$(BIN)/python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
-	$(BIN)/python -m pip check
+	$(PYTHON) scripts/bootstrap.py --venv $(VENV) $(BOOTSTRAP_ARGS)
 
 lint:
 	$(BIN)/ruff check .
@@ -49,6 +47,10 @@ test:
 
 validate: verify-version verify-runtime-lock
 	$(BIN)/python scripts/validate_repository.py
+	$(BIN)/python scripts/verify_deployment.py
+	$(BIN)/python .agents/skills/api-contract-governance-architect/scripts/validate_contract_policy.py
+	$(BIN)/python .agents/skills/edge-cache-architecture-architect/scripts/validate_cache_policy.py
+	$(BIN)/python .agents/skills/release-incident-operations-architect/scripts/validate_release_policy.py
 	$(BIN)/python -m skill_runtime.cli validate
 
 verify-version:
@@ -65,7 +67,7 @@ server:
 
 build: verify-version
 	rm -rf build dist
-	$(BIN)/python -m build --no-isolation
+	$(BIN)/python scripts/build_distribution.py --no-isolation
 
 verify-dist:
 	$(BIN)/python scripts/verify_distribution.py

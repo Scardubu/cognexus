@@ -189,6 +189,33 @@ Common remediations:
 """.strip()
 
 
+def _configured_index_urls(args: argparse.Namespace) -> tuple[str, ...]:
+    """Return configured package indexes once, preserving deterministic order."""
+    values = (args.index_url, *args.extra_index_url)
+    deduplicated: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        normalized = value.strip()
+        if not normalized or normalized in seen:
+            continue
+        deduplicated.append(normalized)
+        seen.add(normalized)
+    return tuple(deduplicated)
+
+
+def _probe_configured_indexes(args: argparse.Namespace) -> tuple[NetworkProbe, ...]:
+    """Probe every index pip may contact so failures occur before environment mutation."""
+    return tuple(
+        _probe_index(
+            url,
+            timeout=args.timeout,
+            proxy=args.proxy,
+            certificate=args.cert,
+        )
+        for url in _configured_index_urls(args)
+    )
+
+
 def _run(command: Sequence[str], *, cwd: Path = PROJECT_ROOT) -> None:
     printable = " ".join(_redact_argument(part) for part in command)
     print(f"+ {printable}", flush=True)
@@ -342,15 +369,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     if not args.wheelhouse and not args.skip_network_check:
-        probe = _probe_index(
-            args.index_url,
-            timeout=args.timeout,
-            proxy=args.proxy,
-            certificate=args.cert,
-        )
-        _print_probe(probe)
+        probes = _probe_configured_indexes(args)
+        if not probes:
+            print("ERROR: at least one package index URL is required.", file=sys.stderr)
+            return 2
+        for probe in probes:
+            _print_probe(probe)
         sys.stdout.flush()
-        if not probe.ok:
+        if any(not probe.ok for probe in probes):
             print("\n" + _network_failure_help(), file=sys.stderr)
             return 3
     elif args.wheelhouse:

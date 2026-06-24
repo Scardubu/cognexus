@@ -16,8 +16,14 @@ def test_quality_gate_uses_invoking_python_for_all_python_tools() -> None:
     assert any(name == "version-sync" for name, _ in commands)
     assert any(name == "runtime-lock" for name, _ in commands)
     assert any(name == "bytecode-compile" for name, _ in commands)
+    assert any(name == "deployment-verification" for name, _ in commands)
+    assert any(name == "api-contract-policy" for name, _ in commands)
+    assert any(name == "edge-cache-policy" for name, _ in commands)
+    assert any(name == "release-incident-policy" for name, _ in commands)
     assert any(name == "distribution-clean" for name, _ in commands)
     assert any(name == "distribution-build" for name, _ in commands)
+    assert any(name == "runtime-sbom-parity" for name, _ in commands)
+    assert any(name == "release-verification" for name, _ in commands)
     audit = next(command for name, command in commands if name == "dependency-audit")
     assert audit[-1] == "constraints/runtime.txt"
     ruff_lint = next(command for name, command in commands if name == "ruff-lint")
@@ -37,3 +43,13 @@ def test_quick_quality_gate_skips_network_audit_and_distribution_build() -> None
     assert "distribution-clean" not in names
     assert "distribution-build" not in names
     assert "distribution-verify" not in names
+    assert "runtime-sbom" not in names
+    assert "release-checksums" not in names
+    assert "release-manifest" not in names
+    assert "release-verification" not in names
+    assert {
+        "deployment-verification",
+        "api-contract-policy",
+        "edge-cache-policy",
+        "release-incident-policy",
+    }.issubset(names)

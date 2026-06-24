@@ -162,6 +162,28 @@ def _commands(*, python: str, quick: bool, audit: bool) -> list[tuple[str, list[
             [python, "scripts/generate_repository_inventory.py", "--check"],
         ),
         ("repository-integrity", [python, "scripts/validate_repository.py"]),
+        ("deployment-verification", [python, "scripts/verify_deployment.py"]),
+        (
+            "api-contract-policy",
+            [
+                python,
+                ".agents/skills/api-contract-governance-architect/scripts/validate_contract_policy.py",
+            ],
+        ),
+        (
+            "edge-cache-policy",
+            [
+                python,
+                ".agents/skills/edge-cache-architecture-architect/scripts/validate_cache_policy.py",
+            ],
+        ),
+        (
+            "release-incident-policy",
+            [
+                python,
+                ".agents/skills/release-incident-operations-architect/scripts/validate_release_policy.py",
+            ],
+        ),
         ("skill-validation", [python, "-m", "skill_runtime.cli", "validate"]),
         ("dry-run", [python, "scripts/test_nexus.py", "--dry-run"]),
     ]
@@ -190,6 +212,43 @@ def _commands(*, python: str, quick: bool, audit: bool) -> list[tuple[str, list[
                 ),
                 ("distribution-build", [python, "scripts/build_distribution.py", "--no-isolation"]),
                 ("distribution-verify", [python, "scripts/verify_distribution.py"]),
+                (
+                    "skills-package",
+                    [python, "-m", "skill_runtime.cli", "package", "--output", "dist/skills"],
+                ),
+                (
+                    "runtime-sbom",
+                    [
+                        python,
+                        "scripts/generate_sbom.py",
+                        "--output",
+                        "dist/cognexus-runtime.cdx.json",
+                    ],
+                ),
+                (
+                    "runtime-sbom-parity",
+                    [
+                        python,
+                        "scripts/verify_runtime_lock.py",
+                        "--sbom",
+                        "dist/cognexus-runtime.cdx.json",
+                        "--require-sbom",
+                    ],
+                ),
+                ("release-checksums", [python, "scripts/create_checksums.py"]),
+                ("release-manifest", [python, "scripts/create_release_manifest.py"]),
+                (
+                    "release-verification",
+                    [
+                        python,
+                        "scripts/verify_release.py",
+                        "--dist",
+                        "dist",
+                        "--sbom",
+                        "dist/cognexus-runtime.cdx.json",
+                        "--require-sbom",
+                    ],
+                ),
             ]
         )
     return checks

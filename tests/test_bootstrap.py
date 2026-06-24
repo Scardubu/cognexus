@@ -87,6 +87,37 @@ def test_safe_url_redacts_embedded_credentials() -> None:
     assert "secret" not in value
 
 
+def test_configured_indexes_are_deduplicated_and_all_preflighted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    args = _args(
+        index_url="https://primary.example/simple",
+        extra_index_url=[
+            "https://secondary.example/simple",
+            "https://primary.example/simple",
+        ],
+    )
+    visited: list[str] = []
+
+    def probe(url: str, **_kwargs: object) -> bootstrap.NetworkProbe:
+        visited.append(url)
+        return bootstrap.NetworkProbe(
+            url=url, host="example", dns_ok=True, https_ok=True, detail="ok"
+        )
+
+    monkeypatch.setattr(bootstrap, "_probe_index", probe)
+    probes = bootstrap._probe_configured_indexes(args)
+
+    assert [item.url for item in probes] == [
+        "https://primary.example/simple",
+        "https://secondary.example/simple",
+    ]
+    assert visited == [
+        "https://primary.example/simple",
+        "https://secondary.example/simple",
+    ]
+
+
 def test_supported_python_contract() -> None:
     bootstrap._check_supported_python((3, 11))
     bootstrap._check_supported_python((3, 14))
@@ -98,16 +129,25 @@ def test_supported_python_contract() -> None:
 
 
 def test_repository_install_surfaces_apply_runtime_constraints() -> None:
-    paths = (
-        PROJECT_ROOT / ".github/workflows/ci.yml",
-        PROJECT_ROOT / ".github/workflows/release.yml",
-        PROJECT_ROOT / "Makefile",
-        PROJECT_ROOT / "scripts/setup.sh",
+    ci = (PROJECT_ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+    release = (PROJECT_ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8")
+    deployment = (PROJECT_ROOT / ".github/workflows/deployment-verification.yml").read_text(
+        encoding="utf-8"
     )
-    for path in paths:
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if "pip install -r requirements-dev.txt" in line:
-                assert "-c constraints/runtime.txt" in line, f"unconstrained install in {path}"
+    dockerfile = (PROJECT_ROOT / "Dockerfile").read_text(encoding="utf-8")
+    makefile = (PROJECT_ROOT / "Makefile").read_text(encoding="utf-8")
+    setup = (PROJECT_ROOT / "scripts/setup.sh").read_text(encoding="utf-8")
+
+    assert "pip install -r requirements-dev.txt -c constraints/runtime.txt" in ci
+    assert "pip install -r requirements-dev.txt -c constraints/runtime.txt" in release
+    assert 'pip install --upgrade "pip>=26,<27" -c constraints/runtime.txt' in ci
+    assert 'pip install --upgrade "pip>=26,<27" -c constraints/runtime.txt' in release
+    assert 'pip install "PyYAML>=6.0.2,<7" -c constraints/runtime.txt' in deployment
+    assert "-c runtime.txt" in dockerfile
+    assert "python scripts/build_distribution.py --no-isolation" in ci
+    assert "python scripts/build_distribution.py --no-isolation" in release
+    assert "scripts/bootstrap.py --venv $(VENV)" in makefile
+    assert '"$PYTHON_BIN" scripts/bootstrap.py "$@"' in setup
 
 
 def test_example_environment_file_is_loadable(

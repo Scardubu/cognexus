@@ -38,6 +38,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 - The development `packaging` range now accepts the certified `packaging==26.2` runtime pin instead of forcing a divergent test environment.
 - Runtime lock/SBOM parity now evaluates platform markers before comparing an installed runtime SBOM, allowing Windows audit environments to verify their active dependency graph without weakening Linux release parity.
 - Local Ruff, MyPy, and Pytest defaults now keep generated cache and temporary state out of source walks, preventing stale Windows cache directories from breaking quality gates.
+- `make bootstrap` and `scripts/setup.sh` now delegate to the hardened cross-platform bootstrap instead of maintaining separate direct-pip install paths.
+- The full local quality gate now continues past distribution verification through skill packaging, runtime SBOM generation, SBOM parity, checksums, manifest creation, and final release verification.
 
 - Docker builds and clean-wheel release verification now use the same exact runtime constraint set as the attested runtime SBOM.
 - Mode-aware runtime routing exposes a minimal specialist subset while the historical
@@ -66,6 +68,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 
 - Replaced shell-generated release checksums that embedded `dist/` path prefixes with a deterministic repository-owned generator that emits paths relative to the release root and is regression tested.
 - Release verification now validates both the top-level artifact checksum set and the nested portable-skill checksum set before accepting a manifest.
+- Release manifest verification now rejects unlisted, missing, or linked files under `dist/` instead of accepting a partial manifest.
+- Observability redaction now recursively replaces nested `session_id`, `sessionid`, `session-id`, and `session.id` keys in structured log payloads.
 - Restored test collection with Starlette 1.x, whose TestClient now uses `httpx2`.
 - Prevented raw session identifiers from entering structured logging context, local
   OpenTelemetry attributes, Redis-session failure logs, or OpenAI trace group IDs.

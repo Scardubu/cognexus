@@ -162,7 +162,16 @@ def test_observability_redacts_raw_session_identifiers() -> None:
     assert event["session_ref"].startswith("session-ref-")
     assert raw not in str(event)
 
-    attributes = safe_span_attributes({"nexus.session_id": raw, "nexus.tier": 4, "object": []})
+    nested = redact_observability_fields(
+        None,
+        "info",
+        {"event": "run", "context": {"session.id": raw}, "items": [{"session-id": raw}]},
+    )
+    assert raw not in str(nested)
+    assert nested["context"]["session_ref"].startswith("session-ref-")
+    assert nested["items"][0]["session_ref"].startswith("session-ref-")
+
+    attributes = safe_span_attributes({"session.id": raw, "nexus.tier": 4, "object": []})
     assert "nexus.session_id" not in attributes
     assert attributes["nexus.session_ref"].startswith("session-ref-")
     assert attributes["nexus.tier"] == 4

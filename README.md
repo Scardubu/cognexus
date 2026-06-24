@@ -280,14 +280,14 @@ approved proxies, private indexes, and offline wheelhouses.
 Manual development installation:
 
 ```bash
-python -m pip install --upgrade "pip>=26,<27"
+python -m pip install --upgrade "pip>=26,<27" -c constraints/runtime.txt
 python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 ```
 
 Runtime-only installation:
 
 ```bash
-python -m pip install --upgrade "pip>=26,<27"
+python -m pip install --upgrade "pip>=26,<27" -c constraints/runtime.txt
 python -m pip install -r requirements.txt -c constraints/runtime.txt
 ```
 
@@ -767,6 +767,18 @@ Security guide: [`docs/SECURITY.md`](docs/SECURITY.md)
 ## Quality gates
 
 Run the complete local release gate:
+
+```bash
+python scripts/quality_gate.py
+```
+
+The full gate is release-complete: after static checks, tests, repository validation, skill
+validation, and dry-run orchestration, it builds distributions, verifies the wheel/source
+archive, packages portable skills, generates the runtime SBOM, verifies runtime-lock/SBOM
+parity, emits deterministic checksums, writes the release manifest, and runs final release
+verification.
+
+The equivalent manual sequence is:
 
 ```bash
 ruff check .

@@ -12,7 +12,7 @@ WORKDIR /build
 RUN python -m venv "$VIRTUAL_ENV"
 COPY requirements.txt constraints/runtime.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip \
-    python -m pip install "pip>=26,<27" "setuptools>=80,<81" "wheel>=0.45,<1" && \
+    python -m pip install "pip>=26,<27" "setuptools>=80,<81" "wheel>=0.45,<1" -c runtime.txt && \
     python -m pip install --no-compile -r requirements.txt -c runtime.txt && \
     python -m pip check
 

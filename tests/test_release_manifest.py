@@ -11,7 +11,7 @@ import pytest
 from config.settings import APP_VERSION
 from scripts.create_checksums import build_checksum_lines, write_checksums
 from scripts.create_release_manifest import build_manifest, write_manifest
-from scripts.verify_release import _verify_checksums
+from scripts.verify_release import _verify_checksums, _verify_manifest
 
 
 def test_release_manifest_is_sorted_deterministic_and_excludes_itself(tmp_path: Path) -> None:
@@ -83,3 +83,31 @@ def test_checksum_generator_rejects_empty_artifact_set(tmp_path: Path) -> None:
 
     with pytest.raises(RuntimeError, match="no release artifacts"):
         build_checksum_lines(dist)
+
+
+def test_release_manifest_verification_rejects_unlisted_artifacts(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    (dist / "artifact.whl").write_bytes(b"wheel")
+    manifest = dist / "RELEASE_MANIFEST.json"
+    write_manifest(dist, manifest)
+    (dist / "injected.txt").write_text("unexpected", encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match=r"unlisted=injected\.txt"):
+        _verify_manifest(dist, manifest)
+
+
+def test_release_manifest_creation_rejects_directory_symlinks(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    target = tmp_path / "target"
+    dist.mkdir()
+    target.mkdir()
+    (dist / "artifact.whl").write_bytes(b"wheel")
+    link = dist / "linked-directory"
+    try:
+        link.symlink_to(target, target_is_directory=True)
+    except (NotImplementedError, OSError):
+        pytest.skip("directory symlinks are unavailable on this platform")
+
+    with pytest.raises(RuntimeError, match="cannot contain symlinks"):
+        build_manifest(dist, dist / "RELEASE_MANIFEST.json")

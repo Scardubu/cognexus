@@ -113,6 +113,15 @@ def _verify_manifest(dist: Path, manifest_path: Path) -> int:
     files = document.get("files")
     if not isinstance(files, list) or not files:
         raise RuntimeError("release manifest must contain files")
+    root = dist.resolve()
+    manifest_resolved = manifest_path.resolve()
+    actual: set[str] = set()
+    for path in sorted(root.rglob("*")):
+        if path.is_symlink():
+            raise RuntimeError(f"release artifacts cannot contain symlinks: {path}")
+        if not path.is_file() or path.resolve() == manifest_resolved:
+            continue
+        actual.add(path.relative_to(root).as_posix())
     seen: set[str] = set()
     for item in files:
         if not isinstance(item, dict):
@@ -128,6 +137,17 @@ def _verify_manifest(dist: Path, manifest_path: Path) -> int:
             "size_bytes"
         ):
             raise RuntimeError(f"manifest integrity mismatch: {name}")
+    unlisted = sorted(actual - seen)
+    missing = sorted(seen - actual)
+    if unlisted or missing:
+        details: list[str] = []
+        if unlisted:
+            details.append("unlisted=" + ",".join(unlisted))
+        if missing:
+            details.append("missing=" + ",".join(missing))
+        raise RuntimeError(
+            "release manifest does not match distribution contents: " + "; ".join(details)
+        )
     return len(files)
 
 

@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Mapping
 from typing import Any
 
-_SESSION_KEYS = {"session_id", "sessionid", "session-id"}
+_SESSION_KEYS = {"session_id", "sessionid", "session-id", "session.id"}
 
 
 def _session_reference(value: object) -> str:
@@ -15,19 +16,42 @@ def _session_reference(value: object) -> str:
     return f"session-ref-{digest[:32]}"
 
 
+def _is_session_key(key: object) -> bool:
+    if not isinstance(key, str):
+        return False
+    normalized = key.strip().lower()
+    if normalized.startswith("nexus."):
+        normalized = normalized.removeprefix("nexus.")
+    return normalized in _SESSION_KEYS
+
+
+def _redact_nested(value: object) -> object:
+    if isinstance(value, Mapping):
+        safe: dict[object, object] = {}
+        for key, item in value.items():
+            if _is_session_key(key):
+                safe.setdefault("session_ref", _session_reference(item))
+            else:
+                safe[key] = _redact_nested(item)
+        return safe
+    if isinstance(value, list):
+        return [_redact_nested(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_redact_nested(item) for item in value)
+    return value
+
+
 def redact_observability_fields(
     logger: object,
     method_name: str,
     event_dict: dict[str, Any],
 ) -> dict[str, Any]:
-    """Replace accidentally logged raw session identifiers with stable references."""
+    """Recursively replace accidentally logged raw session identifiers with references."""
     del logger, method_name
-    for key in tuple(event_dict):
-        if key.lower() not in _SESSION_KEYS:
-            continue
-        value = event_dict.pop(key)
-        event_dict.setdefault("session_ref", _session_reference(value))
-    return event_dict
+    redacted = _redact_nested(event_dict)
+    if not isinstance(redacted, dict):  # pragma: no cover - event_dict is always a mapping
+        return {}
+    return {str(key): value for key, value in redacted.items()}
 
 
 def safe_span_attributes(attributes: dict[str, Any] | None) -> dict[str, Any]:
@@ -36,7 +60,7 @@ def safe_span_attributes(attributes: dict[str, Any] | None) -> dict[str, Any]:
     for key, value in (attributes or {}).items():
         if value is None or not isinstance(value, str | bool | int | float):
             continue
-        if key.lower().replace("nexus.", "") in _SESSION_KEYS:
+        if _is_session_key(key):
             safe["nexus.session_ref"] = _session_reference(value)
         else:
             safe[key] = value

@@ -12,9 +12,10 @@
 | Ruff format check | Passed across **114 Python files** |
 | Strict MyPy | Passed across **111 source files** |
 | Python bytecode compilation | Passed |
-| Pytest collection and execution | **125 passed** |
-| Branch-aware coverage | **79.97%**; enforced floor: 70% |
+| Pytest collection and execution | **127 passed**, **1 skipped** |
+| Branch-aware coverage | **80.01%**; enforced floor: 70% |
 | `python -m pip check` | Passed; no broken installed requirements |
+| `pip-audit -r constraints/runtime.txt` | Passed; no known vulnerabilities found |
 | Version parity | **9** synchronized release-critical declarations at `3.3.1` |
 | Repository source inventory | Deterministic manifest generated and verified |
 | Canonical/bundled skill integrity | **39** synchronized portable skills |
@@ -29,13 +30,13 @@
 | Source distribution | **513 files**; required paths present and generated/unsafe entries absent |
 | Runtime CycloneDX SBOM | **71 active Windows components**, **72 dependency records**, deterministic serial number |
 | Release checksums | **43** artifact entries verified |
-| Release manifest | **45** entries with size and SHA-256 integrity verified |
+| Release manifest | **45** entries with size, SHA-256 integrity, and complete `dist/` membership verified |
 | Release archive safety | Passed: no duplicate, linked, absolute, or traversal paths |
 | Raw session observability protection | Passed through log/span privacy processor tests and static regression checks |
 
-Evidence is retained under `artifacts/finalization/`, including the branch-coverage XML,
-quality logs, repository validation output, dependency-audit failure evidence, and final
-artifact verification summary. Release artifacts and their manifest are under `dist/`.
+Evidence is retained under `artifacts/`, including the branch-coverage XML, per-check
+quality logs, repository validation output, and final artifact verification summary. Release
+artifacts and their manifest are under `dist/`.
 
 ## Functional coverage added in this finalization
 
@@ -46,23 +47,24 @@ The passing suite now verifies:
 - confidence/source-quality conflict weighting, deterministic ties, and deduplication;
 - deterministic mode-aware skill recommendations and additive response metadata;
 - secret-redacted rolling session summaries and continuity scoring;
-- raw session-ID replacement in structured logs and span attributes;
+- recursive raw session-ID replacement in nested structured logs and span attributes;
 - backward-compatible HTTP run payloads and new recommendation/intelligence endpoints;
 - completed policy assets and executable validators for the three named skills;
 - exact runtime locking, platform-marker-aware SBOM parity, isolated deterministic SBOM generation, and development-dependency exclusion;
-- deterministic relative checksum generation plus top-level and nested skill checksum verification;
+- deterministic relative checksum generation, complete release-manifest membership, and top-level/nested skill checksum verification;
 - static Docker/Kubernetes deployment controls;
 - current repository-inventory enforcement;
 - version, source-distribution, and historical agent-factory compatibility.
+- primary/extra package-index preflight de-duplication and converged `make bootstrap`/`setup.sh` installer paths;
+- local/CI/release quality-gate parity through final release verification.
 
 ## Dependency and security audit boundary
 
 The installed declared dependency set is internally consistent: `pip check` passed and the
 active runtime dependency closure was captured in the CycloneDX SBOM. Runtime lock/SBOM parity
 passed with platform markers evaluated for the current Windows environment. A network-backed
-`pip-audit -r constraints/runtime.txt` was requested, but network escalation was rejected by the
-execution environment usage limit. The audit therefore remains **inconclusive**, not passed and
-not a finding of zero vulnerabilities.
+`pip-audit -r constraints/runtime.txt` completed successfully and reported no known
+vulnerabilities for the pinned runtime constraint set at validation time.
 
 Docker Compose static configuration was parsed successfully with `docker compose config`. Docker
 image runtime, `kubectl`, Syft, and Trivy scans were not completed in the local execution

@@ -54,10 +54,10 @@ def build_manifest(dist: Path, output: Path) -> ReleaseManifest:
     output_resolved = output.resolve()
     entries: list[ManifestFile] = []
     for path in sorted(root.rglob("*")):
-        if path.resolve() == output_resolved or not path.is_file():
-            continue
         if path.is_symlink():
             raise RuntimeError(f"release artifacts cannot contain symlinks: {path}")
+        if path.resolve() == output_resolved or not path.is_file():
+            continue
         relative = path.relative_to(root).as_posix()
         entries.append(
             {
