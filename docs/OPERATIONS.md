@@ -31,6 +31,19 @@ curl -i http://localhost:8000/ready
 
 `/health` confirms that the process can serve HTTP. `/ready` checks configuration and the selected session backend. Use `/ready` for load-balancer traffic eligibility.
 
+## Local startup preflight
+
+For operator workstations and staging shells, prefer the venv-aware startup wrapper:
+
+```bash
+python scripts/start.py --env development
+```
+
+The wrapper selects `.venv` when present, prepares local writable state, verifies the
+runtime dependency lock, runs the offline dry-run smoke test, and starts the
+configuration-driven server. Use `--skip-dry-run` only when you need a faster restart and
+have already run the smoke test in the same environment.
+
 ## Metrics
 
 ```bash

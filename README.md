@@ -331,6 +331,17 @@ python scripts/test_nexus.py --dry-run
 
 ### 6. Start the API
 
+Venv-aware local startup with preflight checks:
+
+```bash
+python scripts/start.py --env development
+```
+
+The startup wrapper prefers `.venv` when it exists, prepares local `.env`, `data/`,
+`logs/`, and `artifacts/tmp/` state, verifies the runtime lock, runs the offline dry-run
+smoke test, then starts the configuration-driven server. Use `--reload` for Uvicorn
+auto-reload during local development.
+
 Production-style launcher (honors the validated `NEXUS_HOST`, `NEXUS_PORT`,
 `NEXUS_WORKERS`, proxy-trust, graceful-shutdown, concurrency, and backlog settings):
 
@@ -341,7 +352,7 @@ cognexus-server
 Development with auto-reload:
 
 ```bash
-uvicorn server.app:app --reload --host 127.0.0.1 --port 8000
+python scripts/start.py --reload --host 127.0.0.1 --port 8000 --env development
 ```
 
 Development interfaces:

@@ -7,6 +7,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 ### Added
 
 - Cross-platform dependency bootstrap with preflight DNS/HTTPS diagnostics, approved proxy/private-index support, and deterministic offline wheelhouse creation and installation.
+- Venv-aware startup wrapper that prepares local state, runs runtime-lock and dry-run
+  preflight checks, and starts the API with the verified project interpreter.
 
 - Exact Linux runtime dependency constraints plus a verifier that enforces direct requirement compatibility and CycloneDX component parity.
 - Isolated runtime-only SBOM generation across CI and release workflows so development dependencies cannot alter the attested runtime graph.

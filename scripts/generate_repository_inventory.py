@@ -112,9 +112,9 @@ def render(output: Path) -> str:
     lines = [
         "# Cognexus v3.3.1 Repository Inventory",
         "",
-        f"**Distribution:** `{name}`  ",
-        f"**Version:** `{version}`  ",
-        f"**Inventoried source files:** **{len(records)}**  ",
+        f"**Distribution:** `{name}`",
+        f"**Version:** `{version}`",
+        f"**Inventoried source files:** **{len(records)}**",
         f"**Inventoried bytes:** **{total_bytes:,}**",
         "",
         "This inventory is generated deterministically by "

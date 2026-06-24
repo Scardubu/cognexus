@@ -113,6 +113,27 @@ python scripts/test_nexus.py --dry-run --validate-models
 
 ## Start the API
 
+Recommended local startup:
+
+```bash
+python scripts/start.py --env development
+```
+
+`scripts/start.py` prefers the project `.venv` interpreter when it exists, prepares local
+`.env`, `data/`, `logs/`, and `artifacts/tmp/` state, verifies the runtime lock, runs the
+offline dry-run smoke test, and then starts the configuration-driven server. This avoids
+accidentally starting Cognexus with a global Python interpreter that is missing the
+repository's pinned dependencies.
+
+For auto-reload during local development:
+
+```bash
+python scripts/start.py --reload --host 127.0.0.1 --port 8000 --env development
+```
+
+Direct Uvicorn remains available when you have already activated the intended
+environment:
+
 ```bash
 uvicorn server.app:app --reload --host 127.0.0.1 --port 8000
 ```

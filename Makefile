@@ -3,11 +3,12 @@ VENV ?= .venv
 BOOTSTRAP_ARGS ?=
 BIN := $(VENV)/bin
 
-.PHONY: help bootstrap lint format type test validate verify-version verify-runtime-lock smoke server build verify-dist audit quality quality-quick skills-package release-checksums release-manifest clean
+.PHONY: help bootstrap start lint format type test validate verify-version verify-runtime-lock smoke server build verify-dist audit quality quality-quick skills-package release-checksums release-manifest clean
 
 help:
 	@printf '%s\n' \
 	  'bootstrap       Create .venv and install development dependencies' \
+	  'start           Run venv-aware preflight checks and start the API' \
 	  'lint            Run Ruff lint checks' \
 	  'format          Format Python sources with Ruff' \
 	  'type            Run strict mypy' \
@@ -29,6 +30,9 @@ help:
 
 bootstrap:
 	$(PYTHON) scripts/bootstrap.py --venv $(VENV) $(BOOTSTRAP_ARGS)
+
+start:
+	$(PYTHON) scripts/start.py --venv $(VENV)
 
 lint:
 	$(BIN)/ruff check .
