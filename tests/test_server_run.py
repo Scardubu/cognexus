@@ -19,7 +19,7 @@ def test_run_dry_run() -> None:
     body = response.json()
     assert body["session_id"] == "api-test"
     assert body["trace_validation"]["valid"] is True
-    assert body["response_text"].startswith("┌─ NEXUS SKILL TRACE")
+    assert body["response_text"].startswith("+-- NEXUS SKILL TRACE")
 
 
 def test_stream_dry_run() -> None:

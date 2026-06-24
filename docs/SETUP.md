@@ -162,6 +162,21 @@ Dry run:
 python -m orchestrator.run --dry-run --json "Analyze the current architecture"
 ```
 
+PowerShell uses the backtick for line continuation, not the Bash backslash:
+
+```powershell
+python -m orchestrator.run `
+  "Analyze this architecture and return a production checklist." `
+  --session-id demo-session `
+  --dry-run
+```
+
+The same command can also be run on one line:
+
+```powershell
+python -m orchestrator.run "Analyze this architecture and return a production checklist." --session-id demo-session --dry-run
+```
+
 Live run:
 
 ```bash

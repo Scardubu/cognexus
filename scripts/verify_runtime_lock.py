@@ -43,9 +43,9 @@ def _requirement_lines(path: Path) -> list[Requirement]:
     return requirements
 
 
-def _exact_lock(path: Path) -> dict[str, tuple[str, str]]:
-    """Return canonical name -> (display name, exact version) for a strict lock file."""
-    locked: dict[str, tuple[str, str]] = {}
+def _exact_lock(path: Path) -> dict[str, tuple[str, str, bool]]:
+    """Return canonical name -> (display name, exact version, active marker) for a strict lock."""
+    locked: dict[str, tuple[str, str, bool]] = {}
     for requirement in _requirement_lines(path):
         if requirement.url or requirement.extras:
             raise ValueError(
@@ -58,7 +58,8 @@ def _exact_lock(path: Path) -> dict[str, tuple[str, str]]:
         if key in locked:
             raise ValueError(f"duplicate runtime lock entry: {requirement.name}")
         version = str(Version(specifiers[0].version))
-        locked[key] = (requirement.name, version)
+        marker_active = requirement.marker is None or requirement.marker.evaluate()
+        locked[key] = (requirement.name, version, marker_active)
     if not locked:
         raise ValueError("runtime lock cannot be empty")
     return locked
@@ -118,10 +119,13 @@ def verify_runtime_lock(
     sbom_count: int | None = None
     if sbom_path is not None:
         components = _sbom_components(sbom_path)
-        missing = sorted(set(locked) - set(components))
-        unexpected = sorted(set(components) - set(locked))
+        active_locked = {key: value for key, value in locked.items() if value[2]}
+        missing = sorted(set(active_locked) - set(components))
+        unexpected = sorted(set(components) - set(active_locked))
         mismatched = sorted(
-            key for key in set(locked) & set(components) if locked[key][1] != components[key][1]
+            key
+            for key in set(active_locked) & set(components)
+            if active_locked[key][1] != components[key][1]
         )
         if missing or unexpected or mismatched:
             details: list[str] = []

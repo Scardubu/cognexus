@@ -29,7 +29,7 @@ IGNORED_PARTS: Final = frozenset(
     }
 )
 IGNORED_NAMES: Final = frozenset({".coverage", ".env", "coverage.xml"})
-IGNORED_PREFIXES: Final = ("nexus_openai-",)
+IGNORED_PREFIXES: Final = ("nexus_openai-", "pytest-cache-files-")
 IGNORED_SUFFIXES: Final = frozenset({".db", ".pyc", ".pyo"})
 
 

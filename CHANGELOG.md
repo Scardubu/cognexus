@@ -36,6 +36,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 
 - Developer, CI, release, and deployment installs now apply `constraints/runtime.txt`, so tests and local validation exercise the same runtime dependency resolution as release artifacts.
 - The development `packaging` range now accepts the certified `packaging==26.2` runtime pin instead of forcing a divergent test environment.
+- Runtime lock/SBOM parity now evaluates platform markers before comparing an installed runtime SBOM, allowing Windows audit environments to verify their active dependency graph without weakening Linux release parity.
+- Local Ruff, MyPy, and Pytest defaults now keep generated cache and temporary state out of source walks, preventing stale Windows cache directories from breaking quality gates.
 
 - Docker builds and clean-wheel release verification now use the same exact runtime constraint set as the attested runtime SBOM.
 - Mode-aware runtime routing exposes a minimal specialist subset while the historical
@@ -55,6 +57,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 ### Fixed
 
 - Prevented package-index DNS/socket failures from being misdiagnosed as a missing `openai-agents` release during Windows setup.
+- Fixed hardened Docker Compose Redis startup by running the Redis service as the image's non-root Redis user when all Linux capabilities are dropped.
+- Made dry-run trace output ASCII-safe for native Windows consoles while preserving deterministic trace validation for existing Unicode trace blocks.
 - Made comma-separated list values in `.env.example` load correctly under Pydantic Settings by disabling premature JSON decoding for repository-owned CSV settings.
 - Made the release quality gate warning-clean and filesystem-safe on Windows/Python 3.14 by isolating Ruff, Pytest, bytecode, distribution-build, distribution-verification, and temporary state and by applying a narrow SlowAPI coroutine-inspection compatibility shim.
 - Prevented deterministic repository inventory generation from including local `.env` files, virtual environments, or generated source-distribution staging trees.

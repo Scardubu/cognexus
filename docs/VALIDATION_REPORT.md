@@ -1,7 +1,7 @@
 # Cognexus v3.3.1 Enterprise Validation Report
 
 **Validation date:** 2026-06-24  
-**Validation environment:** Linux, Python 3.13.5  
+**Validation environment:** Windows, Python 3.14.6  
 **Release status:** deterministic repository-local gates passed; environment-dependent promotion gates remain mandatory
 
 ## Verified local results
@@ -9,25 +9,25 @@
 | Gate | Result |
 |---|---:|
 | Ruff lint | Passed |
-| Ruff format check | Passed across **110 Python files** |
-| Strict MyPy | Passed across **107 source files** |
+| Ruff format check | Passed across **114 Python files** |
+| Strict MyPy | Passed across **111 source files** |
 | Python bytecode compilation | Passed |
-| Pytest collection and execution | **109 passed** |
-| Branch-aware coverage | **79.56%**; enforced floor: 70% |
+| Pytest collection and execution | **125 passed** |
+| Branch-aware coverage | **79.97%**; enforced floor: 70% |
 | `python -m pip check` | Passed; no broken installed requirements |
 | Version parity | **9** synchronized release-critical declarations at `3.3.1` |
 | Repository source inventory | Deterministic manifest generated and verified |
 | Canonical/bundled skill integrity | **39** synchronized portable skills |
 | Skill validation | **0 errors, 0 warnings** |
 | Completed skill resources | **20** required operational resources verified in the source distribution |
-| Static deployment controls | Passed: non-root, healthcheck, read-only filesystem, immutable image tag, probes, resource bounds, restricted context, fail-closed production state |
+| Static deployment controls | Passed: Compose Redis non-root under dropped capabilities, non-root app runtime, healthcheck, read-only filesystem, immutable image tag, probes, resource bounds, restricted context, fail-closed production state |
 | Offline runtime smoke | Passed; **20 agents** and **14 executable tools** discovered |
 | Wheel/source distribution build | Passed with the provisioned toolchain and `--no-isolation` |
 | Distribution verification | Passed from an extracted wheel and inspected source archive |
 | Console entry points | `cognexus`, `cognexus-server`, and `cognexus-skills` present |
 | Bundled wheel skills | **39** discovered and valid |
-| Source distribution | **509 files**; required paths present and generated/unsafe entries absent |
-| Runtime CycloneDX SBOM | **70 components**, **71 dependency records**, deterministic serial number |
+| Source distribution | **513 files**; required paths present and generated/unsafe entries absent |
+| Runtime CycloneDX SBOM | **71 active Windows components**, **72 dependency records**, deterministic serial number |
 | Release checksums | **43** artifact entries verified |
 | Release manifest | **45** entries with size and SHA-256 integrity verified |
 | Release archive safety | Passed: no duplicate, linked, absolute, or traversal paths |
@@ -49,7 +49,7 @@ The passing suite now verifies:
 - raw session-ID replacement in structured logs and span attributes;
 - backward-compatible HTTP run payloads and new recommendation/intelligence endpoints;
 - completed policy assets and executable validators for the three named skills;
-- exact runtime locking, isolated deterministic SBOM generation, and development-dependency exclusion;
+- exact runtime locking, platform-marker-aware SBOM parity, isolated deterministic SBOM generation, and development-dependency exclusion;
 - deterministic relative checksum generation plus top-level and nested skill checksum verification;
 - static Docker/Kubernetes deployment controls;
 - current repository-inventory enforcement;
@@ -58,13 +58,15 @@ The passing suite now verifies:
 ## Dependency and security audit boundary
 
 The installed declared dependency set is internally consistent: `pip check` passed and the
-runtime dependency closure was captured in the CycloneDX SBOM. A network-backed
-`pip-audit -r constraints/runtime.txt` was attempted twice, but the execution environment could
-not resolve `pypi.org`. The audit therefore remains **inconclusive**, not passed and not a
-finding of zero vulnerabilities. The captured traceback and nonzero exit code are retained
-under `artifacts/finalization/`.
+active runtime dependency closure was captured in the CycloneDX SBOM. Runtime lock/SBOM parity
+passed with platform markers evaluated for the current Windows environment. A network-backed
+`pip-audit -r constraints/runtime.txt` was requested, but network escalation was rejected by the
+execution environment usage limit. The audit therefore remains **inconclusive**, not passed and
+not a finding of zero vulnerabilities.
 
-Docker, `kubectl`, Syft, and Trivy were not installed in the local execution environment.
+Docker Compose static configuration was parsed successfully with `docker compose config`. Docker
+image runtime, `kubectl`, Syft, and Trivy scans were not completed in the local execution
+environment.
 The repository now contains CI gates for dependency audit, CodeQL/dependency review,
 container build and high/critical vulnerability scanning, source/runtime SBOM generation,
 and signed GitHub artifact attestations. Those remote gates must complete successfully on

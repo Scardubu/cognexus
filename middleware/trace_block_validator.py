@@ -24,15 +24,18 @@ from config.settings import TIER_NAMES, VALID_APP_CONTEXTS
 
 BLOCK_START = "┌─ NEXUS SKILL TRACE"
 BLOCK_END = "└─"
+BLOCK_STARTS = (BLOCK_START, "+-- NEXUS SKILL TRACE")
+BLOCK_ENDS = (BLOCK_END, "+--")
+FIELD_PREFIX = r"(?:│|\|)"
 
 FIELD_PATTERNS: dict[str, str] = {
-    "intent": r"│\s*Intent\s*:\s*(.+?)(?:\s*│|\s*$)",
-    "tier": r"│\s*Tier\s*:\s*([1-8])\s*[—–-]\s*(.+?)(?:\s*│|\s*$)",
-    "app_context": r"│\s*App Context\s*:\s*(.+?)(?:\s*│|\s*$)",
-    "skills": r"│\s*Skills\s*:\s*(.+?)(?:\s*│|\s*$)",
-    "conflicts": r"│\s*Conflicts\s*:\s*(.+?)(?:\s*│|\s*$)",
-    "constraints": r"│\s*Constraints\s*:\s*(.+?)(?:\s*│|\s*$)",
-    "obs_gaps": r"│\s*Obs\.\s*Gaps\s*:\s*(.+?)(?:\s*│|\s*$)",
+    "intent": rf"{FIELD_PREFIX}\s*Intent\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "tier": rf"{FIELD_PREFIX}\s*Tier\s*:\s*([1-8])\s*[—–-]\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "app_context": rf"{FIELD_PREFIX}\s*App Context\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "skills": rf"{FIELD_PREFIX}\s*Skills\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "conflicts": rf"{FIELD_PREFIX}\s*Conflicts\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "constraints": rf"{FIELD_PREFIX}\s*Constraints\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
+    "obs_gaps": rf"{FIELD_PREFIX}\s*Obs\.\s*Gaps\s*:\s*(.+?)(?:\s*{FIELD_PREFIX}|\s*$)",
 }
 
 
@@ -110,8 +113,12 @@ class TraceBlockValidator:
 
         # ── Level 1: Presence and position ──────────────────────────────────
         stripped = response_text.strip()
-        if not stripped.startswith(BLOCK_START):
-            if BLOCK_START in response_text:
+        start_marker = next(
+            (candidate for candidate in BLOCK_STARTS if stripped.startswith(candidate)),
+            None,
+        )
+        if start_marker is None:
+            if any(candidate in response_text for candidate in BLOCK_STARTS):
                 anomalies.append(
                     "BLOCKING: Skill Trace Block found but not at the start. "
                     "No text may precede it."
@@ -121,13 +128,21 @@ class TraceBlockValidator:
             return {"valid": False, "fields": None, "anomalies": anomalies, "raw_block": ""}
 
         # ── Extract raw block ────────────────────────────────────────────────
-        start_idx = response_text.find(BLOCK_START)
-        end_idx = response_text.find(BLOCK_END, start_idx + len(BLOCK_START))
+        start_idx = response_text.find(start_marker)
+        end_candidates = [
+            (response_text.find(candidate, start_idx + len(start_marker)), candidate)
+            for candidate in BLOCK_ENDS
+        ]
+        end_idx, end_marker = min(
+            ((index, candidate) for index, candidate in end_candidates if index != -1),
+            default=(-1, ""),
+            key=lambda item: item[0],
+        )
         if end_idx != -1:
             raw_block = response_text[start_idx : end_idx + 80]
         else:
             raw_block = "\n".join(response_text[start_idx:].split("\n")[:12])
-            anomalies.append("WARNING: Skill Trace Block closing line (└─) not found.")
+            anomalies.append("WARNING: Skill Trace Block closing line not found.")
 
         # ── Level 2: Field parsing and validation ────────────────────────────
         fields = _parse_fields(raw_block)
@@ -175,7 +190,8 @@ class TraceBlockValidator:
         # ── Level 4: Cross-validation (only if no blocking errors) ───────────
         blocking = [a for a in anomalies if a.startswith("BLOCKING")]
         if not blocking:
-            rest = response_text[response_text.find(BLOCK_END, start_idx) + 2 :]
+            rest_start = end_idx + len(end_marker) if end_idx != -1 else start_idx + len(raw_block)
+            rest = response_text[rest_start:]
             conflict_language = re.search(
                 r"\b(?:conflict|contradicts|overrides|takes precedence|wins over)\b",
                 rest,

@@ -47,7 +47,8 @@ dependencies = {file = ["requirements.txt"]}
 [tool.ruff]
 target-version = "py311"
 line-length = 100
-exclude = [".venv", "data", "dist", "build"]
+cache-dir = "artifacts/ruff-cache"
+exclude = [".venv", "artifacts", "data", "dist", "build", "pytest-cache-files-*"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "C4", "SIM", "ASYNC", "RUF", "S", "PERF"]
@@ -62,7 +63,7 @@ strict = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 show_error_codes = true
-exclude = "(^data/|^artifacts/|^build/|^dist/|^nexus_openai-[^/]+/)"
+exclude = "(^data/|^artifacts/|^build/|^dist/|^nexus_openai-[^/]+/|^pytest-cache-files-[^/]+/)"
 
 [[tool.mypy.overrides]]
 module = [
@@ -87,7 +88,7 @@ follow_imports = "skip"
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = "-q --strict-markers --disable-warnings"
+addopts = "-q -p no:cacheprovider --strict-markers --disable-warnings"
 testpaths = ["tests"]
 pythonpath = ["."]
 asyncio_mode = "auto"

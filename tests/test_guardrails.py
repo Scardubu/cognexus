@@ -37,6 +37,21 @@ Use typed tests and deterministic fixtures.
     assert validate_output(text)["valid"] is True
 
 
+def test_ascii_trace_block_output_passes() -> None:
+    text = """+-- NEXUS SKILL TRACE
+| Intent      : Test output
+| Tier        : 2 - Correctness & Stability
+| App Context : None
+| Skills      : testing_strategy_agent
+| Conflicts   : NONE
+| Constraints : NONE
+| Obs. Gaps   : NONE
++--
+Use typed tests and deterministic fixtures.
+"""
+    assert validate_output(text)["valid"] is True
+
+
 def test_output_guardrail_rejects_secret_material() -> None:
     result = validate_output(
         "┌─ NEXUS SKILL TRACE\n"

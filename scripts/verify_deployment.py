@@ -29,6 +29,25 @@ REQUIRED_KUBE_FILES: Final = {
 }
 
 
+def _validate_compose_controls(compose: dict[str, Any]) -> list[str]:
+    """Validate local Compose hardening that static Kubernetes checks cannot see."""
+    services = compose.get("services")
+    if not isinstance(services, dict):
+        raise RuntimeError("docker-compose.yml must define services")
+    redis_service = services.get("redis")
+    if not isinstance(redis_service, dict):
+        raise RuntimeError("docker-compose.yml must define a redis service")
+
+    cap_drop = redis_service.get("cap_drop")
+    if cap_drop == ["ALL"]:
+        user = str(redis_service.get("user", "")).strip()
+        if not user or user in {"0", "0:0", "root"} or user.startswith("0:"):
+            raise RuntimeError(
+                "redis service must set an explicit non-root user when dropping all capabilities"
+            )
+    return ["compose redis non-root startup under dropped capabilities"]
+
+
 def _load(path: Path) -> dict[str, Any]:
     document = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(document, dict):
@@ -47,6 +66,7 @@ def _nested(document: dict[str, Any], *path: str) -> Any:
 
 def validate_static() -> list[str]:
     evidence: list[str] = []
+    evidence.extend(_validate_compose_controls(_load(PROJECT_ROOT / "docker-compose.yml")))
     dockerfile = (PROJECT_ROOT / "Dockerfile").read_text(encoding="utf-8")
     for pattern, description in (
         (r"(?m)^USER\s+10001:10001$", "non-root runtime user"),

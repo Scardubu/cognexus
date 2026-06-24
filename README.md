@@ -777,7 +777,7 @@ python scripts/verify_version.py
 python scripts/test_nexus.py --dry-run
 python -m pip check
 rm -rf build dist
-python -m build --no-isolation
+python scripts/build_distribution.py --no-isolation
 python scripts/verify_distribution.py
 python scripts/verify_deployment.py
 python -m venv /tmp/cognexus-runtime-sbom
@@ -797,6 +797,8 @@ Run the online dependency audit:
 ```bash
 pip-audit -r constraints/runtime.txt
 ```
+
+`constraints/runtime.txt` contains exact pins for the active runtime graph. Platform-specific entries use PEP 508 markers so Linux release SBOM parity and Windows audit environments can both verify their active dependency closures deterministically.
 
 The CI workflows validate supported Python versions, static typing, formatting, linting, tests, branch-aware coverage, dry-run orchestration, package builds, dependency health, and container builds.
 

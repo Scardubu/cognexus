@@ -2,8 +2,8 @@
 
 **Distribution:** `nexus-openai`  
 **Version:** `3.3.1`  
-**Inventoried source files:** **504**  
-**Inventoried bytes:** **2,376,124**
+**Inventoried source files:** **505**  
+**Inventoried bytes:** **2,381,477**
 
 This inventory is generated deterministically by `scripts/generate_repository_inventory.py`. Generated build, distribution, coverage, cache, database, local virtual-environment, secret environment, and evidence-artifact state is excluded. The inventory document itself is excluded to avoid a self-referential digest.
 
@@ -72,7 +72,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `sessions` | 6 |
 | `skill_runtime` | 173 |
 | `skills` | 1 |
-| `tests` | 22 |
+| `tests` | 23 |
 | `tools` | 5 |
 | `tracing` | 2 |
 | `validators` | 5 |
@@ -85,7 +85,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `.in` | 1 |
 | `.json` | 2 |
 | `.md` | 350 |
-| `.py` | 113 |
+| `.py` | 114 |
 | `.sh` | 1 |
 | `.toml` | 1 |
 | `.txt` | 3 |
@@ -274,21 +274,21 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `.github/workflows/docker.yml` | 2243 | `b018ef8cf919efc57811dbb5d430b3a62a40027079486b9104232554cb61f550` |
 | `.github/workflows/release.yml` | 4433 | `504f3fc17fd16e595fb3ee8043b3cf7da1fda36961d3424a4a69e42b40bd0c59` |
 | `.github/workflows/security.yml` | 1987 | `d14d5c37abd0a4e57afae613b5f08328ae0664810b0a521f84c5adf465203669` |
-| `.gitignore` | 207 | `1625a8e73eaff4751e839514b27f0c9cbea17b1658d9ba00c6de8549acced827` |
+| `.gitignore` | 227 | `0369990d7fcde57182a3d80751d4848841ead6178b71c56b6639207e4dfde210` |
 | `AGENTS.md` | 3394 | `1701f32bb437cedc519bd38e1058c6d75394c3f1ab99d65624d4a912de29ea40` |
-| `CHANGELOG.md` | 13982 | `37b6c7f4d175fea24ed72c985fcb1fbe64295e7efd6ee62f9c7831d1a29e41c0` |
+| `CHANGELOG.md` | 14673 | `58179a8e5c28b14f8335e83f58eaad72ec64e4c305ee683ed9eac5a123b74eea` |
 | `CONTRIBUTING.md` | 1853 | `a8c43c5de8eb5aa5645e990dbe0f0fc48b8ef318e345db4c98e4b28c95a2f3c1` |
 | `DELIVERY.md` | 2266 | `818dd3ce6b93d4387edc21988792cb09393555a3f29ab91a06bb6616a472c868` |
 | `Dockerfile` | 2273 | `2a17afe6ae053d36a027b3215a3283d7be4c962724a206a198f4dfa0277acb7a` |
 | `MANIFEST.in` | 868 | `7903bde41a41b5f03996f6dcfd953e0eb440f3d22de2a1ff820d3851a4d92b49` |
 | `Makefile` | 3015 | `07c93347550bc5904d438c68548637cb752772b3f9383c98bf2fc67d516d9e9c` |
-| `README.md` | 40827 | `efdfc2f621390a9213b8fdf00c5f7c358fac852e554a9915cf17f0bdfb338e68` |
+| `README.md` | 41091 | `e1100711eb4f6014eb1e0c81fe4596d0d1682469ff58814728363411069d6b96` |
 | `SECURITY.md` | 1708 | `0bd9bc33a6837fbdd30aa1a3d24861c0678e44367d46aa725d39366fa86b44af` |
 | `config/__init__.py` | 28 | `c6d125ccf2d5439ceae3ab56e834ee27bf2aa7830108226213a26a855a12be94` |
 | `config/agent_registry.json` | 16530 | `6404c56e89dc39c363eaa51b2184b4e3e94f080814e5fbe36490d5be62e025b9` |
 | `config/settings.py` | 20310 | `d3cb871a918acefe26908ca860110c0ca78a8b26776029e391dcdb64f146dd3a` |
 | `config/stack_manifest.json` | 4158 | `be8406804cc46f0c8c53d19634b07962b0e9d3914c7071a8179844b8f7da94f8` |
-| `constraints/runtime.txt` | 2009 | `641e0e53ba0a6983141e214400008194e62f8d9a87577b7a222f9b67114aaf09` |
+| `constraints/runtime.txt` | 2098 | `b0a55beed1b5de997669c951050c16148696e7e9da41e0186bf26be0d529f548` |
 | `deploy/kubernetes/configmap.yaml` | 771 | `9a0354af20f102f1fbe0d15be6e9ad1a9b7dabdb34885fdb820626ccb2d025cb` |
 | `deploy/kubernetes/deployment.yaml` | 2694 | `3f8718823a4730690ecb82c2a022b29d904cf73509497903990e70019e1d9e26` |
 | `deploy/kubernetes/hpa.yaml` | 664 | `e0bc3a70d94c8c6bcb3f16b56dcd83b7ee0f33032976a74916fd8fa9fac0db1c` |
@@ -300,7 +300,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `deploy/kubernetes/service-account.yaml` | 121 | `a9ee3e1284c80a56fc6195b921a9ecb9d9e422399e5a2003d92cecf9c73e0f7e` |
 | `deploy/kubernetes/service.yaml` | 299 | `92732a9d16b2751739a80f6c4c715b329df7303edddb8940b14c21a5d2e06623` |
 | `deploy/otel-collector-config.yaml` | 501 | `e16f418698f1df0b0ba3de68dc9ab678ae24dc7cef5c196d44e2d9e82326c653` |
-| `docker-compose.yml` | 2649 | `fc7e141fc1b9043e04ba91a66f07c5d18d240e3b00fd62144a8bb8cf9d16ffeb` |
+| `docker-compose.yml` | 2669 | `e36651713d32b9390b116e19209dbacf5eddb3161f38df788efba5b4e7a1fc30` |
 | `docs/ARCHITECTURE.md` | 8817 | `118d8a8e1a86dec8620e5bc801cbc99a7318c68e285774e9ab6e8abb07e79f00` |
 | `docs/DEPLOYMENT.md` | 9817 | `ca2c48c691f5fbccb28d5632cf654656391ce2eace083a3e22c6af396cdd6c97` |
 | `docs/ENTERPRISE_AUDIT.md` | 12629 | `986483f076c9ab4f7ef56c0c4a8f80c7b2d72fc73f97234e8fcba40c4bb32b2b` |
@@ -312,7 +312,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `docs/RELEASE_CHECKLIST.md` | 4900 | `76879e8c6add2328036ef664fa0e569732af259f3d021756a992b1208f207179` |
 | `docs/RESEARCH_BASELINE.md` | 5238 | `d5b76e6aa0606a7a4084b48ac34334bfaa351d6c28758f706fa26276f7950952` |
 | `docs/SECURITY.md` | 6606 | `8821a1784f74208629107ede8b324640266819c752e2df4f5492c14b6bc193ee` |
-| `docs/SETUP.md` | 8178 | `b58a6af90787d0e512533163cd26df86b5608327b85fc1151db5d2ec1f6e351f` |
+| `docs/SETUP.md` | 8594 | `f669f6362782812a2796c780eb2aa3e5beb4fb9e1c294458483ffff1dac926eb` |
 | `docs/SETUP_AND_IMPLEMENTATION.md` | 9769 | `533d0a8166bdee2041c07c1240cca5323a06e59cc55dd63e2eca3b8f356dff9f` |
 | `docs/SKILLS.md` | 7861 | `12854354a113d738311cd7ecbf4d59d4261061467afcef4a639430ce7dc4676d` |
 | `docs/SLO.md` | 2600 | `3347a7146d6a3f567f034f311281f1e73423e903d6b0fafd3e6da38ff135aff6` |
@@ -321,7 +321,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `docs/V3_3_0_ENTERPRISE_HARDENING_REPORT.md` | 30024 | `af5d0a2d045316796d0e3dfcae8065d7e7c2276c06542e356714199317987219` |
 | `docs/V3_3_1_ENTERPRISE_FINALIZATION_REPORT.md` | 15776 | `f369ac8c3fe77776e975a57b0df674d87343df0f22edf4e59bc4c24375e2a6bf` |
 | `docs/V3_3_1_PRODUCTION_READINESS_REPORT.md` | 1820 | `c5664262792d9a6faf787cc5717dfbfe84a0c7ec732eff378a2a118916522abc` |
-| `docs/VALIDATION_REPORT.md` | 5904 | `478baa844be0048d8bdf16340c6fdf0ae3b5e57886b9b1d1accc42debb31e668` |
+| `docs/VALIDATION_REPORT.md` | 6158 | `fd70bd523c4f5084b213c500f4656f710d780ff99c30de661fa2a50b4c6397c4` |
 | `docs/migration_checklist.md` | 2824 | `11a128745a46d02b5a512f1b80985d414109f3399ae4a36daa76bf13d9210199` |
 | `evals/cases/basic.yaml` | 889 | `5ff461486def0a5dd475c1a4c66ac6254f2eaf023e10cc948013a96b6b091ce2` |
 | `evals/promptfoo.yaml` | 571 | `7c334cf06b185ee387228f32377b8bf843ecd4c4d74f11050d6aafcb0e5d49b1` |
@@ -330,7 +330,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `middleware/guardrails.py` | 427 | `68befc53256119b832238b0961e898e11aa09f86201f7db9ed6dc1a926052cc9` |
 | `middleware/input_guardrail.py` | 2409 | `5d13cd26c4c02af4fe8da920a1a2f5a4e968aeed67f1f84d68f4b990a44de438` |
 | `middleware/output_guardrail.py` | 2944 | `9fded60709a788c86169f82964a99e30591e1a2c73f75c7359bcdc9d51a9e09b` |
-| `middleware/trace_block_validator.py` | 8117 | `71caef4e6b2fde3701498980116253446e6e6ce84b412973a474ee90423232dd` |
+| `middleware/trace_block_validator.py` | 8899 | `8767f7a65026e90be45c461e8097e97807f6227de225ed46e0a67fc7abc0c5ea` |
 | `nexus_agents/__init__.py` | 223 | `ccb5f4648c96562a65336f7b8e1e693e5c11644dc0ea11362a1c21a67a625f41` |
 | `nexus_agents/base_agent.py` | 2930 | `03a412ec4ecb9fd2e279a8d7f482f8d7476c5c582364f5575268cc9a5754a04e` |
 | `nexus_agents/registry.py` | 3779 | `71d8f859a9a76cd660e11b4bb84e6bf9f6683050e10afb2f76c15044912964ba` |
@@ -345,14 +345,14 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `orchestrator/errors.py` | 464 | `f3133421de1aa05669128b05703bf80a9fefba0f4f17bbf94234ffdba0ea7fc9` |
 | `orchestrator/execution_modes.py` | 8952 | `1c10dec545c6edbb323999fcfe5d04f19e8666fdf7507b95f6cf703e6759278c` |
 | `orchestrator/model_router.py` | 5749 | `69ceada7a2c062556c69be82298172a0de7873940e878150c123a074dc6e1ce9` |
-| `orchestrator/nexus_agent.py` | 22255 | `e772c41fbd65eff0869fae9320adad9943602b98fad989446c5670bc01dd057e` |
+| `orchestrator/nexus_agent.py` | 22233 | `9c695c8dc9c22cc5ec402f99bb7ed00f15f53aebd99bdbebde56d98d935c4910` |
 | `orchestrator/nexus_prompt.py` | 14380 | `d5a1b4581c09d4582cc8576b254b6b35f06c953c065db5892b725e8be3eabaea` |
 | `orchestrator/response_metadata.py` | 3132 | `d6dc270c0ccd030c0126a530ff5624a09e89e1350327c6b93d9aa17cff0b70a5` |
 | `orchestrator/run.py` | 2346 | `c4e823aee5f23ba985a84fa82e64b8adc6eada10e994c280dd4de5cbcd03d1fe` |
 | `orchestrator/runtime.py` | 4242 | `a4b049c84d726d7bac712a817c0352fa956e4c2a8fc91a02873a2dbf3c053340` |
 | `orchestrator/skill_recommender.py` | 10142 | `debb0d4c1be7e30db6723b2a2ed9ed41f1fc96ed87991c70277af2165847f2a2` |
 | `orchestrator/tier_classifier.py` | 6082 | `f281189d4e79f4440d98ded2a6ff974b7643e3332625a6d76bb4b821368cc000` |
-| `pyproject.toml` | 2539 | `d267fc3f330fbcabd6b501f7b9001060dafcd266331d1fda495067d2d6c7ec62` |
+| `pyproject.toml` | 2658 | `b1ab2395d54fb21b1a52dd58bcd8c5cef8e5d2a42e12cb3ec1a92ea46de36eba` |
 | `requirements-dev.txt` | 404 | `424d0cd4ba0970de6ee60d68014a9ff79e9104df549a4fe86db62e3bd3ea3998` |
 | `requirements.txt` | 762 | `0a99a0b9225f0a026360aca2a443094e0612dd5d6914d7e7c8ad047c1a250ead` |
 | `scripts/__init__.py` | 50 | `e5fe8652bc6f4fdff554f6a9bf2a968628d10a0842332bcb5ffa70c2c84dc420` |
@@ -360,7 +360,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `scripts/build_distribution.py` | 2837 | `d1c1993736433f47bea280e170037e8d608b7623bb7a08e7897394c42c3808c8` |
 | `scripts/create_checksums.py` | 3288 | `02ebe9c3546d9a6c7e5f2e2ad54d73dd63816345d4502e1bec2a844b1e1c4d04` |
 | `scripts/create_release_manifest.py` | 3365 | `de5cdf74ffc5770944de6cfca57b480b09de32af272bb118020cb489571fc2c2` |
-| `scripts/generate_repository_inventory.py` | 7488 | `5c2dd513d9932e2b396d43721dd6c33a2403dc5bca1b313e065cdc3614bb9a2b` |
+| `scripts/generate_repository_inventory.py` | 7510 | `04e8df6ef583850bf0a85702a208b03adbb576c94e85aacaa1d445f7cef01b00` |
 | `scripts/generate_sbom.py` | 13133 | `4d5b1c9b6c509ffe71a551864862302f93ad2b0b831ce02de0424c96a1aaeb8f` |
 | `scripts/install_skills.py` | 4090 | `515961d19e7469ceabdc274190494d29139f4210edd3d759cc658a7a842245ba` |
 | `scripts/quality_gate.py` | 7875 | `dfd8a609cbe6cfc41ee66c552e884f69fc4f3dde1fbae490949432dde6fa9c71` |
@@ -368,10 +368,10 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `scripts/sync_skill_pack.py` | 1870 | `a18e1cf968244c3864a87ee4b698fa47aad6b92e40f7355784218271c68729e1` |
 | `scripts/test_nexus.py` | 3043 | `1c9fd8725beb5bb600b14fb099bbaeb1239957af63623bb8cc479dbac5f849ba` |
 | `scripts/validate_repository.py` | 4364 | `b1702b71cc254a2d86d9820d17f6448a9cfdc5c93b8ecc0e6a3273edda705995` |
-| `scripts/verify_deployment.py` | 8457 | `db2cc98798cc826dc15c5d5a4f4445fbd517b9c390aa86d978cc26faf3dfc026` |
+| `scripts/verify_deployment.py` | 9444 | `a68fdc0323067076d831ddb1f4fc463e447fb7b3904226ada340c605e6cfb6ba` |
 | `scripts/verify_distribution.py` | 10893 | `c1ae20e5420a2cb1bf92a3e1b8ff00b53a09ba4e0fb588e5a5ca6e1628187c13` |
 | `scripts/verify_release.py` | 8985 | `aa70dce55df92f585df800ed0b23ef3098472972ac1e3de232ea255cd6a454e0` |
-| `scripts/verify_runtime_lock.py` | 7617 | `6a6257cff7506019dff849b19c0b73049aa1d5230eae6dec89307d29311e4a52` |
+| `scripts/verify_runtime_lock.py` | 7872 | `a5ca3a5ba8df88902304ba233d973f8ee911d13ebae9947da4c31d7bca815e5e` |
 | `scripts/verify_version.py` | 4478 | `c51c5aff9ef9ebc5537055f3c82123cd800d9a1411621644e9cb23475eb20c22` |
 | `security/__init__.py` | 34 | `3eac13d55b447aff758fe202abd835d3b163edcfa6c2c73423715fb391c4c9d8` |
 | `security/identifiers.py` | 2866 | `87b8203299742aa82a885b465be9cb1806742ef2efc62f2da2b518fd0584057e` |
@@ -569,8 +569,9 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `skills/catalog.yaml` | 27346 | `8b74fa1b44d0f2144fe2d6e25702e2951fa228096e3e01cea06b3d8dc4dd063c` |
 | `tests/conftest.py` | 1654 | `d6dc96a51cc7744d84ce3fa1ba59002dcbd2a760077cb4039eb287591e2b9969` |
 | `tests/test_bootstrap.py` | 4343 | `963fff1adb6997cd5e7c6242e88c15b26704c678acb36cd71bfe2f44ae093657` |
-| `tests/test_cli.py` | 1292 | `839b2ba71503c366dff924c3db03f6aab2de2b287c41f873d6c50110b109321e` |
-| `tests/test_guardrails.py` | 1805 | `b86a0a96cd70d85935ad54475ddd57608b71093b91d6a77cd7f3a9c6b7464e5a` |
+| `tests/test_cli.py` | 1636 | `236679291cd9c77be79c8663bb060cb125f31392fb6e2c370b88a08472debcfe` |
+| `tests/test_deployment_verification.py` | 728 | `46bbc7cef97edf77e80152bd31f828ad73ecb569befa0f735427c4c7907c024e` |
+| `tests/test_guardrails.py` | 2192 | `8289189e3044cceb037aa1966c889270718549658ab8e4bc1656f066531bd4eb` |
 | `tests/test_health.py` | 508 | `1fc8fa6288f8da62ed62f6f9877830e32ee2556e2ee84b43c3820ffa3e12a395` |
 | `tests/test_intelligence_upgrades.py` | 12202 | `a3fa43505133be2e8fa837ceaddaa52a14ecb04b4653a71e9a40c5021c7f8d9f` |
 | `tests/test_model_router.py` | 4310 | `3de51baa670995c1737f663211ec48aefff7837037ab17f2267e7f94970415f7` |
@@ -580,10 +581,10 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `tests/test_registry.py` | 1026 | `6d48f82b90c6e2b0007748668f35e875ceac26e103c49ac0f4ab794310892858` |
 | `tests/test_release_manifest.py` | 2965 | `d3d4136494e9b646917c3b381e886404c5f4b281fc73f8470437c11f015ee12a` |
 | `tests/test_runtime.py` | 3486 | `d9f5f79e47b68f01a3215bd7bb4a40424d4de0ae7d7af48aa96b3d6746696c7d` |
-| `tests/test_runtime_lock.py` | 3109 | `afbbd4c2f987aca1590bdfe57ce5048fe5cff49d49cb12b18af074fdf3d58e3b` |
+| `tests/test_runtime_lock.py` | 3109 | `fda37c3189511f8101b02db18f5168e84099ac5b45847aca6fdc5223ee16863f` |
 | `tests/test_security_hardening.py` | 14922 | `a4f92cfd0f2fa036ac94b9d3f256e4fdf1dc40791947206237c5e0f3127860d9` |
 | `tests/test_server_launcher.py` | 1073 | `539f10cd5a416f4c9cb7d2ff242e41f553bf57b92004db1a6e11027234c81184` |
-| `tests/test_server_run.py` | 2178 | `1ccf8202b885d8d89be22783def2e1b27b451b9cdffe41ebb5fa1b42af60e43d` |
+| `tests/test_server_run.py` | 2175 | `f90e262323e226a6be1cd9c9d4b4baf9115006566e23588542d7e401754ffee0` |
 | `tests/test_sessions.py` | 7538 | `a62a86c104eb844da2f481c5941dbce28214435b0281c61d0bc85b242f336202` |
 | `tests/test_skill_api.py` | 1474 | `41337e4feb3a6c698271829684b06504a062acca21d3225136f9274edffd386c` |
 | `tests/test_skill_runtime.py` | 4304 | `d7384b18c893ea6731476f123cb6d83a424ffb97f1b7221881d605cd67c992ff` |

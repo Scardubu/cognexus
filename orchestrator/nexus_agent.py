@@ -225,15 +225,15 @@ def _dry_run_response(
     execution_mode: ExecutionMode = "focus",
 ) -> str:
     return (
-        "┌─ NEXUS SKILL TRACE\n"
-        f"│ Intent      : {classification.intent or 'Dry-run validation'}\n"
-        f"│ Tier        : {classification.tier} — {classification.tier_name}\n"
-        f"│ App Context : {classification.app_context}\n"
-        "│ Skills      : dry_run_validator\n"
-        "│ Conflicts   : NONE\n"
-        "│ Constraints : NONE\n"
-        "│ Obs. Gaps   : NONE\n"
-        "└─\n"
+        "+-- NEXUS SKILL TRACE\n"
+        f"| Intent      : {classification.intent or 'Dry-run validation'}\n"
+        f"| Tier        : {classification.tier} - {classification.tier_name}\n"
+        f"| App Context : {classification.app_context}\n"
+        "| Skills      : dry_run_validator\n"
+        "| Conflicts   : NONE\n"
+        "| Constraints : NONE\n"
+        "| Obs. Gaps   : NONE\n"
+        "+--\n"
         f"Dry-run completed in {execution_mode} mode. Imports, routing, guardrails, sessions, "
         "recommendations, and validators are available."
     )

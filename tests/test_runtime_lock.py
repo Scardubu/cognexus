@@ -20,7 +20,7 @@ def test_runtime_lock_covers_repository_requirements() -> None:
         PROJECT_ROOT / "constraints/runtime.txt",
     )
     assert summary.direct_requirements >= 20
-    assert summary.locked_components == 70
+    assert summary.locked_components == 72
     assert summary.sbom_components is None
 
 
