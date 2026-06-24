@@ -121,7 +121,7 @@ Copy the repository to `/opt/nexus-openai`, then install as the service account:
 ```bash
 sudo -u nexus python3 -m venv /opt/nexus-openai/.venv
 sudo -u nexus /opt/nexus-openai/.venv/bin/python -m pip install --upgrade "pip>=26,<27"
-sudo -u nexus /opt/nexus-openai/.venv/bin/python -m pip install -r /opt/nexus-openai/requirements.txt
+sudo -u nexus /opt/nexus-openai/.venv/bin/python -m pip install -r /opt/nexus-openai/requirements.txt -c /opt/nexus-openai/constraints/runtime.txt
 sudo -u nexus /opt/nexus-openai/.venv/bin/python -m pip check
 sudo -u nexus /opt/nexus-openai/.venv/bin/python /opt/nexus-openai/scripts/verify_version.py
 ```

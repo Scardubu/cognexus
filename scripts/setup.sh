@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Idempotent local developer bootstrap for Cognexus v3.2.
+# Idempotent local developer bootstrap for Cognexus v3.3.1.
 set -euo pipefail
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
@@ -24,7 +24,7 @@ fi
 # shellcheck disable=SC1091
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 python -m pip check
 
 if [[ ! -f .env ]]; then

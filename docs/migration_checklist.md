@@ -55,7 +55,7 @@
 ## Verification
 
 ```bash
-python -m pip install -r requirements-dev.txt
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 python -m pip check
 ruff check .
 ruff format --check .

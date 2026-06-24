@@ -267,18 +267,35 @@ python -m venv .venv
 
 ### 3. Install dependencies
 
-Development installation:
+Recommended cross-platform bootstrap (Windows, Linux, macOS, or WSL2):
 
 ```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
+python scripts/bootstrap.py
+```
+
+The bootstrap checks Python compatibility and package-index DNS/HTTPS reachability before
+invoking pip, applies the certified runtime constraints to developer installs, and supports
+approved proxies, private indexes, and offline wheelhouses.
+
+Manual development installation:
+
+```bash
+python -m pip install --upgrade "pip>=26,<27"
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 ```
 
 Runtime-only installation:
 
 ```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+python -m pip install --upgrade "pip>=26,<27"
+python -m pip install -r requirements.txt -c constraints/runtime.txt
+```
+
+When pip reports both a DNS/socket error and `from versions: none`, diagnose the network
+rather than changing a valid dependency pin:
+
+```bash
+python scripts/bootstrap.py --diagnose-only
 ```
 
 ### 4. Configure the environment

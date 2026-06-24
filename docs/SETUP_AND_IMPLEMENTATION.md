@@ -27,22 +27,35 @@ Do not run from inside the original nested skills archives. The canonical runtim
 
 ## 3. Create the environment
 
-### Linux/macOS
+### Recommended on every supported platform
+
+```bash
+python scripts/bootstrap.py
+```
+
+Windows may select Python 3.12 explicitly:
+
+```powershell
+py -3.12 scripts/bootstrap.py
+.\.venv\Scripts\Activate.ps1
+```
+
+### Manual Linux/macOS/WSL2
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
+python -m pip install --upgrade "pip>=26,<27"
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 ```
 
-### Windows PowerShell
+### Manual Windows PowerShell
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
+python -m pip install --upgrade "pip>=26,<27"
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 ```
 
 Validate dependencies:
@@ -50,6 +63,14 @@ Validate dependencies:
 ```bash
 python -m pip check
 ```
+
+## 3.1 Package-index connectivity failures
+
+Run `python scripts/bootstrap.py --diagnose-only` when pip reports DNS, socket, proxy, or
+TLS errors. A trailing `No matching distribution found` after those connection failures is
+not a reliable package-version result because pip never received the index data. The bootstrap
+supports `--proxy`, `--index-url`, `--cert`, `--download-wheelhouse`, and `--wheelhouse`; see
+`docs/SETUP.md` for the complete Windows recovery procedure.
 
 ## 4. Configure environment variables
 

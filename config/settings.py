@@ -6,11 +6,11 @@ import ipaddress
 import re
 from functools import lru_cache
 from pathlib import Path
-from typing import Literal, Self
+from typing import Annotated, Literal, Self
 from urllib.parse import urlsplit
 
 from pydantic import Field, SecretStr, field_validator, model_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 from security.policies import looks_like_placeholder_secret
 
@@ -24,6 +24,7 @@ Environment = Literal["development", "test", "staging", "production"]
 SessionBackend = Literal["sqlite", "redis", "stateless"]
 ModelValidationMode = Literal["off", "warn", "strict"]
 PromptCacheRetention = Literal["off", "in_memory", "24h"]
+CsvList = Annotated[list[str], NoDecode]
 
 _RATE_LIMIT_PATTERN = re.compile(r"^[1-9][0-9]*/(?:second|minute|hour|day)s?$")
 
@@ -101,8 +102,8 @@ class Settings(BaseSettings):
     nexus_skill_activation_max_chars: int = Field(default=40_000, ge=1_000, le=200_000)
     nexus_skill_catalog_max_chars: int = Field(default=24_000, ge=1_000, le=100_000)
     nexus_skill_cache_ttl_seconds: int = Field(default=60, ge=1, le=3_600)
-    nexus_skill_allowed_names: list[str] = Field(default_factory=list)
-    nexus_skill_denied_names: list[str] = Field(default_factory=list)
+    nexus_skill_allowed_names: CsvList = Field(default_factory=list)
+    nexus_skill_denied_names: CsvList = Field(default_factory=list)
 
     nexus_rate_limit: str = "30/minute"
     nexus_rate_limit_storage_uri: str | None = None
@@ -111,10 +112,10 @@ class Settings(BaseSettings):
     nexus_max_output_chars: int = Field(default=200_000, ge=1_000, le=2_000_000)
     nexus_request_timeout_seconds: float = Field(default=180.0, ge=1.0, le=900.0)
     nexus_stream_chunk_chars: int = Field(default=768, ge=128, le=8192)
-    nexus_cors_origins: list[str] = Field(
+    nexus_cors_origins: CsvList = Field(
         default_factory=lambda: ["http://localhost:3000", "http://localhost:8000"]
     )
-    nexus_trusted_hosts: list[str] = Field(
+    nexus_trusted_hosts: CsvList = Field(
         default_factory=lambda: ["localhost", "127.0.0.1", "testserver"]
     )
     nexus_enable_docs: bool = True
@@ -142,6 +143,16 @@ class Settings(BaseSettings):
         if isinstance(value, str):
             return [item.strip() for item in value.split(",") if item.strip()]
         return value
+
+    @field_validator("trace_include_sensitive", mode="before")
+    @classmethod
+    def reject_sensitive_trace_capture(cls, value: object) -> bool:
+        """Accept explicit false spellings while making sensitive tracing impossible."""
+        if value is False:
+            return False
+        if isinstance(value, str) and value.strip().lower() in {"false", "0", "no", "off"}:
+            return False
+        raise ValueError("TRACE_INCLUDE_SENSITIVE cannot be enabled")
 
     @field_validator("nexus_log_level")
     @classmethod

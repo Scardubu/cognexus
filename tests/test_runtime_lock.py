@@ -6,6 +6,9 @@ import json
 from pathlib import Path
 
 import pytest
+from packaging.requirements import Requirement
+from packaging.utils import canonicalize_name
+from packaging.version import Version
 
 from config.settings import PROJECT_ROOT
 from scripts.verify_runtime_lock import verify_runtime_lock
@@ -40,3 +43,31 @@ def test_runtime_lock_rejects_sbom_version_drift(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="version_mismatch"):
         verify_runtime_lock(requirements, lock, sbom_path=sbom)
+
+
+def test_development_requirements_accept_overlapping_runtime_pins() -> None:
+    lock: dict[str, Version] = {}
+    for raw in (PROJECT_ROOT / "constraints/runtime.txt").read_text(encoding="utf-8").splitlines():
+        value = raw.split("#", 1)[0].strip()
+        if not value:
+            continue
+        requirement = Requirement(value)
+        specifier = next(iter(requirement.specifier))
+        lock[canonicalize_name(requirement.name)] = Version(specifier.version)
+
+    overlaps = 0
+    for raw in (PROJECT_ROOT / "requirements-dev.txt").read_text(encoding="utf-8").splitlines():
+        value = raw.split("#", 1)[0].strip()
+        if not value or value.startswith(("-r ", "--requirement ")):
+            continue
+        requirement = Requirement(value)
+        locked_version = lock.get(canonicalize_name(requirement.name))
+        if locked_version is None:
+            continue
+        overlaps += 1
+        assert locked_version in requirement.specifier, (
+            f"development requirement {requirement} rejects certified runtime pin "
+            f"{requirement.name}=={locked_version}"
+        )
+
+    assert overlaps >= 2

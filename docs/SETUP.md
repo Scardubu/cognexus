@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Linux, macOS, or WSL2.
+- Windows 10/11 PowerShell, Linux, macOS, or WSL2.
 - Python 3.11–3.14.
 - Git.
 - Docker Engine with Compose v2 for container deployment.
@@ -11,22 +11,32 @@
 
 ## Automated developer setup
 
-From the repository root:
+Cross-platform, including native Windows PowerShell:
+
+```bash
+python scripts/bootstrap.py
+```
+
+Linux/macOS/WSL2 may also run the full validation bootstrap:
 
 ```bash
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
 ```
 
-The script creates `.venv`, installs developer dependencies, creates `.env` when missing, runs all quality gates, runs the dry-run smoke test, and builds the Python distributions.
+`bootstrap.py` checks the supported Python range, verifies package-index DNS and HTTPS
+reachability before pip runs, creates `.venv`, installs against the certified runtime
+constraints, verifies the environment, and creates local configuration directories. It also
+supports approved proxies, private package indexes, and offline wheelhouses. `setup.sh` adds
+the complete quality gate, smoke test, and distribution build.
 
 ## Manual developer setup
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
+python -m pip install --upgrade "pip>=26,<27"
+python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 python -m pip check
 cp .env.example .env
 mkdir -p data logs
@@ -35,7 +45,7 @@ mkdir -p data logs
 Runtime-only environments may install:
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install -r requirements.txt -c constraints/runtime.txt
 ```
 
 ## Configure local development
@@ -210,6 +220,50 @@ docker compose --profile observability up --build
 ```
 
 ## Troubleshooting
+
+
+### Pip reports `No matching distribution` after DNS or socket errors
+
+`openai-agents==0.17.6` is a valid release. When pip first reports `WinError 10051`,
+`getaddrinfo failed`, or `Failed to resolve pypi.org`, the final `from versions: none` text
+means pip received no package index response; it does not prove the pinned version is absent.
+
+Run the repository-owned diagnostic before retrying:
+
+```powershell
+python scripts/bootstrap.py --diagnose-only
+Resolve-DnsName pypi.org
+Test-NetConnection pypi.org -Port 443
+python -m pip config debug
+Get-ChildItem Env:PIP_*,Env:HTTP_PROXY,Env:HTTPS_PROXY
+```
+
+Then use the appropriate safe path:
+
+```powershell
+# Standard public PyPI
+python scripts/bootstrap.py
+
+# Organization-approved proxy
+python scripts/bootstrap.py --proxy http://proxy.example:8080
+
+# Organization-approved private package index
+python scripts/bootstrap.py --index-url https://packages.example/simple
+
+# Offline wheelhouse copied from a matching connected machine
+python scripts/bootstrap.py --wheelhouse .\wheelhouse
+```
+
+To prepare an offline wheelhouse on a connected machine using the same operating system,
+CPU architecture, and Python minor version:
+
+```powershell
+python scripts/bootstrap.py --download-wheelhouse .\wheelhouse
+```
+
+Do not bypass TLS with `--trusted-host`, do not disable certificate validation, and do not
+remove the certified dependency pin to work around a connectivity failure. On managed
+networks, obtain the proxy, private index, or CA certificate path from the administrator.
 
 ### `OPENAI_API_KEY is required`
 

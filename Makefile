@@ -29,7 +29,7 @@ help:
 bootstrap:
 	$(PYTHON) -m venv $(VENV)
 	$(BIN)/python -m pip install "pip>=26,<27"
-	$(BIN)/python -m pip install -r requirements-dev.txt
+	$(BIN)/python -m pip install -r requirements-dev.txt -c constraints/runtime.txt
 	$(BIN)/python -m pip check
 
 lint:

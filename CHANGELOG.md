@@ -6,6 +6,8 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 
 ### Added
 
+- Cross-platform dependency bootstrap with preflight DNS/HTTPS diagnostics, approved proxy/private-index support, and deterministic offline wheelhouse creation and installation.
+
 - Exact Linux runtime dependency constraints plus a verifier that enforces direct requirement compatibility and CycloneDX component parity.
 - Isolated runtime-only SBOM generation across CI and release workflows so development dependencies cannot alter the attested runtime graph.
 - Deterministic source repository inventory generation and CI freshness enforcement.
@@ -32,6 +34,9 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 
 ### Changed
 
+- Developer, CI, release, and deployment installs now apply `constraints/runtime.txt`, so tests and local validation exercise the same runtime dependency resolution as release artifacts.
+- The development `packaging` range now accepts the certified `packaging==26.2` runtime pin instead of forcing a divergent test environment.
+
 - Docker builds and clean-wheel release verification now use the same exact runtime constraint set as the attested runtime SBOM.
 - Mode-aware runtime routing exposes a minimal specialist subset while the historical
   one-argument agent factory and omitted-mode request behavior remain compatible.
@@ -48,6 +53,9 @@ All notable changes are documented here. Cognexus follows semantic versioning.
   fallback, including staging environments.
 
 ### Fixed
+
+- Prevented package-index DNS/socket failures from being misdiagnosed as a missing `openai-agents` release during Windows setup.
+- Made comma-separated list values in `.env.example` load correctly under Pydantic Settings by disabling premature JSON decoding for repository-owned CSV settings.
 
 - Replaced shell-generated release checksums that embedded `dist/` path prefixes with a deterministic repository-owned generator that emits paths relative to the release root and is regression tested.
 - Release verification now validates both the top-level artifact checksum set and the nested portable-skill checksum set before accepting a manifest.
