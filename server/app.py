@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import json
+import sys
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager, suppress
-from typing import Annotated, Any
+from typing import Annotated, Any, cast
 
 from fastapi import Depends, FastAPI, Request, Response, status
 from fastapi import Path as ApiPath
@@ -65,6 +67,12 @@ SkillRegistryDependency = Annotated[SkillRegistry, Depends(skill_registry_depend
 logger = get_logger(__name__)
 
 
+def _install_slowapi_python314_compat() -> None:
+    """Keep SlowAPI route registration warning-clean on Python 3.14."""
+    if sys.version_info >= (3, 14):
+        cast("Any", asyncio).iscoroutinefunction = inspect.iscoroutinefunction
+
+
 def _sse(event: str, payload: dict[str, Any] | str) -> str:
     data = payload if isinstance(payload, str) else json.dumps(payload, separators=(",", ":"))
     return f"event: {event}\ndata: {data}\n\n"
@@ -72,6 +80,7 @@ def _sse(event: str, payload: dict[str, Any] | str) -> str:
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     """Build one independently configurable application instance."""
+    _install_slowapi_python314_compat()
     cfg = settings or get_settings()
     limiter = create_limiter(cfg)
 

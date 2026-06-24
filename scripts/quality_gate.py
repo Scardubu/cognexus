@@ -10,14 +10,18 @@ import signal
 import subprocess
 import sys
 import time
+from collections.abc import Callable
 from contextlib import suppress
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Final
+from typing import Final, cast
 
 PROJECT_ROOT: Final = Path(__file__).resolve().parent.parent
 DEFAULT_REPORT: Final = PROJECT_ROOT / "artifacts" / "quality-report.json"
 CHECK_TIMEOUT_SECONDS: Final = 300
+RUFF_CACHE_DIR: Final = "artifacts/ruff-cache"
+PYTHON_CACHE_DIR: Final = PROJECT_ROOT / "artifacts" / "pycache"
+TEMP_DIR: Final = PROJECT_ROOT / "artifacts" / "tmp"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -44,12 +48,25 @@ def _parser() -> argparse.ArgumentParser:
 
 def _terminate_process_group(process: subprocess.Popen[str]) -> None:
     """Terminate an entire check process tree so timeouts cannot leak children."""
+    if os.name != "posix":
+        process.terminate()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+        return
+
+    kill_process_group = cast(
+        "Callable[[int, int], None]",
+        os.killpg,  # type: ignore[attr-defined]
+    )
     try:
-        os.killpg(process.pid, signal.SIGTERM)
+        kill_process_group(process.pid, int(signal.SIGTERM))
         process.wait(timeout=5)
     except (ProcessLookupError, subprocess.TimeoutExpired):
         with suppress(ProcessLookupError):
-            os.killpg(process.pid, signal.SIGKILL)
+            kill_process_group(process.pid, 9)
         process.wait()
 
 
@@ -59,10 +76,18 @@ def _run(name: str, command: list[str]) -> CheckResult:
     started = time.perf_counter()
     log_path = PROJECT_ROOT / "artifacts" / f"quality-{name}.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    PYTHON_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    TEMP_DIR.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.setdefault("PYTHONPYCACHEPREFIX", str(PYTHON_CACHE_DIR))
+    env["TEMP"] = str(TEMP_DIR)
+    env["TMP"] = str(TEMP_DIR)
+    env["TMPDIR"] = str(TEMP_DIR)
     with log_path.open("w", encoding="utf-8") as log_file:
         process = subprocess.Popen(  # noqa: S603
             command,
             cwd=PROJECT_ROOT,
+            env=env,
             stdout=log_file,
             stderr=subprocess.STDOUT,
             text=True,
@@ -90,8 +115,11 @@ def _commands(*, python: str, quick: bool, audit: bool) -> list[tuple[str, list[
         ("environment-integrity", [python, "-m", "pip", "check"]),
         ("version-sync", [python, "scripts/verify_version.py"]),
         ("runtime-lock", [python, "scripts/verify_runtime_lock.py"]),
-        ("ruff-lint", [python, "-m", "ruff", "check", "."]),
-        ("ruff-format", [python, "-m", "ruff", "format", "--check", "."]),
+        ("ruff-lint", [python, "-m", "ruff", "check", "--cache-dir", RUFF_CACHE_DIR, "."]),
+        (
+            "ruff-format",
+            [python, "-m", "ruff", "format", "--cache-dir", RUFF_CACHE_DIR, "--check", "."],
+        ),
         ("mypy", [python, "-m", "mypy", "."]),
         (
             "bytecode-compile",
@@ -120,6 +148,10 @@ def _commands(*, python: str, quick: bool, audit: bool) -> list[tuple[str, list[
                 python,
                 "-m",
                 "pytest",
+                "-p",
+                "no:cacheprovider",
+                "-p",
+                "no:tmpdir",
                 "--cov",
                 "--cov-report=term-missing",
                 "--cov-report=xml:artifacts/coverage.xml",
@@ -147,12 +179,16 @@ def _commands(*, python: str, quick: bool, audit: bool) -> list[tuple[str, list[
                         "-c",
                         (
                             "import shutil; "
+                            "from pathlib import Path; "
                             "shutil.rmtree('build', ignore_errors=True); "
-                            "shutil.rmtree('dist', ignore_errors=True)"
+                            "shutil.rmtree('dist', ignore_errors=True); "
+                            "[shutil.rmtree(path, ignore_errors=True) "
+                            "for path in Path('.').glob('nexus_openai-*') "
+                            "if path.is_dir()]"
                         ),
                     ],
                 ),
-                ("distribution-build", [python, "-m", "build", "--no-isolation"]),
+                ("distribution-build", [python, "scripts/build_distribution.py", "--no-isolation"]),
                 ("distribution-verify", [python, "scripts/verify_distribution.py"]),
             ]
         )

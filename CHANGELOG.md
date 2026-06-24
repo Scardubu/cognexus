@@ -56,6 +56,9 @@ All notable changes are documented here. Cognexus follows semantic versioning.
 
 - Prevented package-index DNS/socket failures from being misdiagnosed as a missing `openai-agents` release during Windows setup.
 - Made comma-separated list values in `.env.example` load correctly under Pydantic Settings by disabling premature JSON decoding for repository-owned CSV settings.
+- Made the release quality gate warning-clean and filesystem-safe on Windows/Python 3.14 by isolating Ruff, Pytest, bytecode, distribution-build, distribution-verification, and temporary state and by applying a narrow SlowAPI coroutine-inspection compatibility shim.
+- Prevented deterministic repository inventory generation from including local `.env` files, virtual environments, or generated source-distribution staging trees.
+- Allowed exact platform-marked runtime lock pins so Windows vulnerability-audit environments skip POSIX-only transitive packages without weakening Linux release SBOM parity.
 
 - Replaced shell-generated release checksums that embedded `dist/` path prefixes with a deterministic repository-owned generator that emits paths relative to the release root and is regression tested.
 - Release verification now validates both the top-level artifact checksum set and the nested portable-skill checksum set before accepting a manifest.

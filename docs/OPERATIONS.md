@@ -147,15 +147,16 @@ Do not copy a live SQLite file with a naive filesystem operation while writes ar
 
 1. Merge only after CI passes.
 2. Run `python scripts/verify_version.py --expected <tag-without-v>` and require a clean `python -m pip check`.
-3. Build distributions with the audited toolchain and `python -m build --no-isolation`.
-4. Build an immutable image tagged with the Git SHA.
-5. Scan the image and dependencies.
-6. Deploy to staging.
-7. Run health, readiness, API, session, distributed-rate-limit, and guardrail smoke tests.
-8. Review error and latency metrics.
-9. Promote the same image digest to production.
-10. Observe through at least one normal traffic window.
-11. Record the release SHA and rollback digest.
+3. Run `python scripts/quality_gate.py --quick` for local source validation; the gate isolates generated caches and temporary files from source directories and release evidence.
+4. Build distributions with the audited toolchain and `python scripts/build_distribution.py --no-isolation` so PEP 517 build hooks inherit repository-controlled temporary directories on Windows/Python 3.14.
+5. Build an immutable image tagged with the Git SHA.
+6. Scan the image and dependencies.
+7. Deploy to staging.
+8. Run health, readiness, API, session, distributed-rate-limit, and guardrail smoke tests.
+9. Review error and latency metrics.
+10. Promote the same image digest to production.
+11. Observe through at least one normal traffic window.
+12. Record the release SHA and rollback digest.
 
 ## Post-deployment verification
 

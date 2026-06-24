@@ -1,9 +1,11 @@
 # Cognexus v3.3.1 Linux runtime resolution.
 #
 # This constraints file freezes the dependency graph used for release images,
-# clean-wheel verification, and runtime SBOM generation. Direct compatibility
-# ranges remain in requirements.txt; update this file and the checked-in SBOM
-# together through the documented release dependency-update procedure.
+# clean-wheel verification, runtime SBOM generation, and vulnerability audit.
+# Direct compatibility ranges remain in requirements.txt; update this file and
+# the checked-in SBOM together through the documented release dependency-update
+# procedure. POSIX-only transitive pins may carry markers so Windows audit
+# environments can evaluate the lock without attempting unsupported builds.
 
 aiosqlite==0.22.1
 annotated-doc==0.0.4
@@ -71,7 +73,7 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.7.0
 uvicorn==0.49.0
-uvloop==0.22.1
+uvloop==0.22.1; platform_system != "Windows"
 watchfiles==1.2.0
 websockets==16.0
 wrapt==2.2.2

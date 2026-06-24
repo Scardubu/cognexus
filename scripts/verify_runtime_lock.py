@@ -47,9 +47,9 @@ def _exact_lock(path: Path) -> dict[str, tuple[str, str]]:
     """Return canonical name -> (display name, exact version) for a strict lock file."""
     locked: dict[str, tuple[str, str]] = {}
     for requirement in _requirement_lines(path):
-        if requirement.url or requirement.marker or requirement.extras:
+        if requirement.url or requirement.extras:
             raise ValueError(
-                f"runtime lock entry must be an unconditional registry pin: {requirement}"
+                f"runtime lock entry must be an exact registry pin without extras: {requirement}"
             )
         specifiers = list(requirement.specifier)
         if len(specifiers) != 1 or specifiers[0].operator != "==" or "*" in specifiers[0].version:

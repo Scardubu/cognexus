@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ipaddress
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -10,7 +11,12 @@ from typing import Annotated, Literal, Self
 from urllib.parse import urlsplit
 
 from pydantic import Field, SecretStr, field_validator, model_validator
-from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
+from pydantic_settings import (
+    BaseSettings,
+    NoDecode,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+)
 
 from security.policies import looks_like_placeholder_secret
 
@@ -46,6 +52,21 @@ class Settings(BaseSettings):
         str_strip_whitespace=True,
         validate_default=True,
     )
+
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        """Allow deterministic test runs to opt out of local .env loading."""
+        del settings_cls
+        if os.getenv("NEXUS_DISABLE_DOTENV", "").strip().lower() in {"1", "true", "yes", "on"}:
+            return init_settings, env_settings, file_secret_settings
+        return init_settings, env_settings, dotenv_settings, file_secret_settings
 
     nexus_env: Environment = "development"
     nexus_log_level: str = "INFO"

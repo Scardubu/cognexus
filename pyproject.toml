@@ -62,7 +62,7 @@ strict = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 show_error_codes = true
-exclude = "(^data/|^build/|^dist/)"
+exclude = "(^data/|^artifacts/|^build/|^dist/|^nexus_openai-[^/]+/)"
 
 [[tool.mypy.overrides]]
 module = [

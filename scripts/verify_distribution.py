@@ -4,14 +4,17 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import importlib.metadata
 import json
 import os
+import secrets
+import shutil
 import stat
 import sys
 import tarfile
-import tempfile
 import zipfile
+from collections.abc import Iterator
 from pathlib import Path, PurePosixPath
 from typing import Final
 
@@ -22,6 +25,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from config.settings import APP_VERSION  # noqa: E402
 
 DEFAULT_DIST: Final = PROJECT_ROOT / "dist"
+TEMP_ROOT: Final = PROJECT_ROOT / "artifacts" / "tmp"
 EXPECTED_DISTRIBUTION: Final = "nexus-openai"
 EXPECTED_VERSION: Final = APP_VERSION
 EXPECTED_SKILLS: Final = 39
@@ -123,6 +127,23 @@ def _safe_archive_name(name: str) -> PurePosixPath:
     return path
 
 
+@contextlib.contextmanager
+def _temporary_directory(prefix: str) -> Iterator[Path]:
+    TEMP_ROOT.mkdir(parents=True, exist_ok=True)
+    for _ in range(100):
+        path = TEMP_ROOT / f"{prefix}{secrets.token_hex(8)}"
+        try:
+            path.mkdir()
+        except FileExistsError:
+            continue
+        try:
+            yield path.resolve()
+        finally:
+            shutil.rmtree(path, ignore_errors=True)
+        return
+    raise FileExistsError("could not create a unique temporary verification directory")
+
+
 def _extract_wheel(wheel: Path, destination: Path) -> None:
     if not zipfile.is_zipfile(wheel):
         raise RuntimeError(f"not a wheel ZIP archive: {wheel}")
@@ -185,8 +206,7 @@ def main() -> int:
     sdist = _resolve_single(args.sdist, "*.tar.gz", "source archive")
     sdist_root, sdist_files = _verify_sdist(sdist)
 
-    with tempfile.TemporaryDirectory(prefix="cognexus-wheel-") as temporary:
-        extracted = Path(temporary).resolve()
+    with _temporary_directory(prefix="cognexus-wheel-") as extracted:
         _extract_wheel(wheel, extracted)
 
         # Ensure environment-backed defaults cannot initiate provider or telemetry I/O.

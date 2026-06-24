@@ -20,6 +20,11 @@ def test_quality_gate_uses_invoking_python_for_all_python_tools() -> None:
     assert any(name == "distribution-build" for name, _ in commands)
     audit = next(command for name, command in commands if name == "dependency-audit")
     assert audit[-1] == "constraints/runtime.txt"
+    ruff_lint = next(command for name, command in commands if name == "ruff-lint")
+    assert ruff_lint[4:6] == ["--cache-dir", "artifacts/ruff-cache"]
+    pytest = next(command for name, command in commands if name == "pytest")
+    assert pytest[3:5] == ["-p", "no:cacheprovider"]
+    assert pytest[5:7] == ["-p", "no:tmpdir"]
     build = next(command for name, command in commands if name == "distribution-build")
     assert build[-1] == "--no-isolation"
 

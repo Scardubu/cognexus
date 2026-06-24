@@ -18,10 +18,11 @@ make audit
 - [ ] `python scripts/verify_runtime_lock.py` proves direct-range and exact-lock consistency.
 - [ ] Ruff lint and formatting checks pass.
 - [ ] Strict mypy passes.
-- [ ] Tests and branch coverage pass on Python 3.11 and 3.13 in CI.
+- [ ] Tests and branch coverage pass on Python 3.11, 3.13, and 3.14-compatible local validation where used.
+- [ ] Local quality-gate runs keep tool caches, bytecode caches, and pytest temporary state out of source directories and out of release evidence.
 - [ ] Repository and skill validation report zero errors.
 - [ ] Offline smoke test passes.
-- [ ] Wheel and source distribution build successfully with the provisioned toolchain and `python -m build --no-isolation`.
+- [ ] Wheel and source distribution build successfully with the provisioned toolchain and `python scripts/build_distribution.py --no-isolation`.
 - [ ] Wheel installs and validates in a clean environment.
 - [ ] Skill archives reproduce byte-for-byte and `SHA256SUMS` is present.
 
@@ -80,4 +81,3 @@ python scripts/verify_runtime_lock.py --sbom dist/cognexus-runtime.cdx.json --re
 ```
 
 The generator does not query package indexes after dependencies are installed. The isolated environment prevents development-only constraints from changing the runtime inventory. This complements the source-level SPDX inventory produced in CI; it does not replace the network-backed vulnerability audit.
-

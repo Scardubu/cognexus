@@ -13,5 +13,6 @@ data/*.db-*
 AGENTS.override.md
 dist/
 build/
+nexus_openai-*/
 *.egg-info/
 artifacts/

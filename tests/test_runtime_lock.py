@@ -45,6 +45,20 @@ def test_runtime_lock_rejects_sbom_version_drift(tmp_path: Path) -> None:
         verify_runtime_lock(requirements, lock, sbom_path=sbom)
 
 
+def test_runtime_lock_accepts_platform_marked_exact_pins(tmp_path: Path) -> None:
+    requirements = tmp_path / "requirements.txt"
+    lock = tmp_path / "runtime.txt"
+    requirements.write_text("example>=1,<3\n", encoding="utf-8")
+    lock.write_text(
+        'example==2.0\nposix-only==1.0; platform_system != "Windows"\n',
+        encoding="utf-8",
+    )
+
+    summary = verify_runtime_lock(requirements, lock)
+
+    assert summary.locked_components == 2
+
+
 def test_development_requirements_accept_overlapping_runtime_pins() -> None:
     lock: dict[str, Version] = {}
     for raw in (PROJECT_ROOT / "constraints/runtime.txt").read_text(encoding="utf-8").splitlines():

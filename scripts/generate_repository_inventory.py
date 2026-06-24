@@ -20,6 +20,7 @@ IGNORED_PARTS: Final = frozenset(
         ".mypy_cache",
         ".pytest_cache",
         ".ruff_cache",
+        ".venv",
         "__pycache__",
         "artifacts",
         "build",
@@ -27,7 +28,8 @@ IGNORED_PARTS: Final = frozenset(
         "nexus_openai.egg-info",
     }
 )
-IGNORED_NAMES: Final = frozenset({".coverage", "coverage.xml"})
+IGNORED_NAMES: Final = frozenset({".coverage", ".env", "coverage.xml"})
+IGNORED_PREFIXES: Final = ("nexus_openai-",)
 IGNORED_SUFFIXES: Final = frozenset({".db", ".pyc", ".pyo"})
 
 
@@ -47,6 +49,8 @@ def _included_files(output: Path) -> list[Path]:
             continue
         relative = path.relative_to(PROJECT_ROOT)
         if IGNORED_PARTS.intersection(relative.parts):
+            continue
+        if any(part.startswith(IGNORED_PREFIXES) for part in relative.parts):
             continue
         if (
             path.name in IGNORED_NAMES
@@ -115,8 +119,9 @@ def render(output: Path) -> str:
         "",
         "This inventory is generated deterministically by "
         "`scripts/generate_repository_inventory.py`. Generated build, distribution, "
-        "coverage, cache, database, and evidence-artifact state is excluded. The inventory "
-        "document itself is excluded to avoid a self-referential digest.",
+        "coverage, cache, database, local virtual-environment, secret environment, "
+        "and evidence-artifact state is excluded. The inventory document itself is "
+        "excluded to avoid a self-referential digest.",
         "",
         "## Architecture surfaces",
         "",

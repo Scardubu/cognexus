@@ -14,6 +14,7 @@ def _settings(tmp_path: object) -> Settings:
         nexus_model_validation_mode="off",
         nexus_session_backend="sqlite",
         nexus_sqlite_path=tmp_path / "skill-api.db",  # type: ignore[operator]
+        nexus_api_key=None,
         nexus_compaction_enabled=False,
         nexus_otel_enabled=False,
         nexus_enable_docs=False,
