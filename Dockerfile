@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 ARG APP_VERSION=3.3.1
 
-FROM python:3.12-slim AS builder
+FROM python:3.14-slim AS builder
 ARG APP_VERSION
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     NEXUS_OTEL_ENABLED=false \
     cognexus-skills validate
 
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 ARG APP_VERSION
 ARG VCS_REF=unknown
