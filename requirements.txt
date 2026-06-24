@@ -1,5 +1,5 @@
 # Core OpenAI runtime — verified compatible as of 2026-06-23.
-openai-agents[redis]==0.17.6
+openai-agents[redis]==0.17.7
 # Kept explicit because the Agents SDK imports MCP integration modules and a
 # stale environment can otherwise appear healthy until packaging/runtime checks.
 mcp>=1.19,<2
