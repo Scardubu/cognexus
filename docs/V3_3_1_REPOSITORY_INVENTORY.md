@@ -2,8 +2,8 @@
 
 **Distribution:** `nexus-openai`
 **Version:** `3.3.1`
-**Inventoried source files:** **507**
-**Inventoried bytes:** **2,406,433**
+**Inventoried source files:** **515**
+**Inventoried bytes:** **2,431,097**
 
 This inventory is generated deterministically by `scripts/generate_repository_inventory.py`. Generated build, distribution, coverage, cache, database, local virtual-environment, secret environment, and evidence-artifact state is excluded. The inventory document itself is excluded to avoid a self-referential digest.
 
@@ -49,15 +49,18 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `CONTRIBUTING.md` | 1 |
 | `DELIVERY.md` | 1 |
 | `Dockerfile` | 1 |
+| `FAQ.md` | 1 |
 | `MANIFEST.in` | 1 |
 | `Makefile` | 1 |
+| `QUICKSTART.md` | 1 |
 | `README.md` | 1 |
 | `SECURITY.md` | 1 |
+| `TROUBLESHOOTING.md` | 1 |
 | `config` | 4 |
 | `constraints` | 1 |
 | `deploy` | 11 |
 | `docker-compose.yml` | 1 |
-| `docs` | 22 |
+| `docs` | 26 |
 | `evals` | 2 |
 | `middleware` | 6 |
 | `nexus_agents` | 4 |
@@ -72,7 +75,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `sessions` | 6 |
 | `skill_runtime` | 173 |
 | `skills` | 1 |
-| `tests` | 24 |
+| `tests` | 25 |
 | `tools` | 5 |
 | `tracing` | 2 |
 | `validators` | 5 |
@@ -84,8 +87,8 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `.example` | 1 |
 | `.in` | 1 |
 | `.json` | 2 |
-| `.md` | 350 |
-| `.py` | 116 |
+| `.md` | 357 |
+| `.py` | 117 |
 | `.sh` | 1 |
 | `.toml` | 1 |
 | `.txt` | 3 |
@@ -266,7 +269,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `.codex/instructions.md` | 655 | `f339b37e17c4504ce4b92c32f522e3beabe9105a664a823df801119354a1f862` |
 | `.cursorrules` | 448 | `6790b05066eee8b7e8a062644ff721561abc9acb21ebc5257350ebaf23fe0f26` |
 | `.dockerignore` | 197 | `86169a0966c4768a2160a10ede8be6e8877990268effd994503b717e76582b1b` |
-| `.env.example` | 2897 | `efa68f09b1250448404a6b5f8621eb192b35181bb74d9c635647a549cf4661d3` |
+| `.env.example` | 3175 | `1a6b2036e09b8a5dbc2bd6a865ea2bf6838c8063dc8121f3f531e6a5212ada9b` |
 | `.github/dependabot.yml` | 627 | `29ce91a2f25d3a4134ba5888b58c0fc5f3767a88361d6e8d8e7580637b8e8444` |
 | `.github/pull_request_template.md` | 564 | `36665683af24ed4dfadeab965181ad3beecdb63e864a710df0d9f9921ee371cd` |
 | `.github/workflows/ci.yml` | 7045 | `6be4ecf1614d0349eda2830a41def45a96ac9fe34101a80a8232303711b70791` |
@@ -276,14 +279,17 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `.github/workflows/security.yml` | 1987 | `d14d5c37abd0a4e57afae613b5f08328ae0664810b0a521f84c5adf465203669` |
 | `.gitignore` | 235 | `e81a03e65dcd97841aede647998e21a1341dcb402499048a25562099bbd47c5b` |
 | `AGENTS.md` | 3394 | `1701f32bb437cedc519bd38e1058c6d75394c3f1ab99d65624d4a912de29ea40` |
-| `CHANGELOG.md` | 15492 | `cc3aef04b6c2438196859787a7b3b6a4b78590b603ab3f4ec03e06710d1288ab` |
-| `CONTRIBUTING.md` | 1853 | `a8c43c5de8eb5aa5645e990dbe0f0fc48b8ef318e345db4c98e4b28c95a2f3c1` |
+| `CHANGELOG.md` | 15696 | `117a287a518db038cbe93babb4acd25c29cbffcd30f021f7c03b6d6d495a32d2` |
+| `CONTRIBUTING.md` | 2218 | `58a950f83cf5f8368026561ec13d35ed35cd745bfa8d97b0de6b2993dda9b5ad` |
 | `DELIVERY.md` | 2266 | `818dd3ce6b93d4387edc21988792cb09393555a3f29ab91a06bb6616a472c868` |
 | `Dockerfile` | 2352 | `b27f61a40d04e8cbf35c8224516d35c2ab6be22c65dd4b1b9964c4205325dee0` |
+| `FAQ.md` | 2681 | `21018ffcde812bcb1ac30f9c93bfdedafb66e87b2088bb9440040ffbe7b4dbe4` |
 | `MANIFEST.in` | 868 | `7903bde41a41b5f03996f6dcfd953e0eb440f3d22de2a1ff820d3851a4d92b49` |
 | `Makefile` | 3407 | `f68d5786d68a4373355a203fc00e7c8d229e76a21db52aebcdcc8bcf208d2ffe` |
-| `README.md` | 42032 | `e9f9628ea052d713e542b85b32bdd9187ffc2f7948dcdf1a4f664c17e4a42e05` |
+| `QUICKSTART.md` | 2982 | `8bd0d17467ac9fab38fc97b9bb1dfd812963daefe3ba86a289ed225607a4ec08` |
+| `README.md` | 42605 | `aac7bbc57fb550a80b130e4dbc310f5e283b87f0814db862b1202e7961c2da2f` |
 | `SECURITY.md` | 1708 | `0bd9bc33a6837fbdd30aa1a3d24861c0678e44367d46aa725d39366fa86b44af` |
+| `TROUBLESHOOTING.md` | 3947 | `c669c1eb5b69031c1127e4f1bd34d766a33f14b964a121f167b4f6604b0f6e6f` |
 | `config/__init__.py` | 28 | `c6d125ccf2d5439ceae3ab56e834ee27bf2aa7830108226213a26a855a12be94` |
 | `config/agent_registry.json` | 16530 | `6404c56e89dc39c363eaa51b2184b4e3e94f080814e5fbe36490d5be62e025b9` |
 | `config/settings.py` | 20310 | `d3cb871a918acefe26908ca860110c0ca78a8b26776029e391dcdb64f146dd3a` |
@@ -301,23 +307,27 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `deploy/kubernetes/service.yaml` | 299 | `92732a9d16b2751739a80f6c4c715b329df7303edddb8940b14c21a5d2e06623` |
 | `deploy/otel-collector-config.yaml` | 501 | `e16f418698f1df0b0ba3de68dc9ab678ae24dc7cef5c196d44e2d9e82326c653` |
 | `docker-compose.yml` | 2785 | `3735a180913558e8208da7803652e533f74f96e7749c829b2efd3dd06a598df7` |
+| `docs/API.md` | 2950 | `b9d3734bb26d70017c3a036f8d12290b7a57adfa45da7333d2e51b83df965c8e` |
 | `docs/ARCHITECTURE.md` | 8817 | `118d8a8e1a86dec8620e5bc801cbc99a7318c68e285774e9ab6e8abb07e79f00` |
 | `docs/DEPLOYMENT.md` | 9817 | `ca2c48c691f5fbccb28d5632cf654656391ce2eace083a3e22c6af396cdd6c97` |
 | `docs/ENTERPRISE_AUDIT.md` | 12629 | `986483f076c9ab4f7ef56c0c4a8f80c7b2d72fc73f97234e8fcba40c4bb32b2b` |
 | `docs/EVALS.md` | 3541 | `2ef5e3b562bae08ef1d8e02696ffdcd9dd8d52683ad90ad824b8078e829e3490` |
 | `docs/FILE_INVENTORY.md` | 18564 | `0d5f2a5aefc49642aa9d2949bbaecce5375486e3c3920719df94412c11c85b9a` |
 | `docs/FINAL_PRODUCTION_READINESS_REPORT.md` | 3344 | `505b970da0b3763969686dbd52b3c7920b783a7a48b645a27e9e6c6901998371` |
+| `docs/GLOSSARY.md` | 1665 | `bbb9c9b8e1b94061d56aa4ee24a85c0fe9dc6152620b01326d2f2f7fe498138e` |
 | `docs/NEXUS_PROMPT_CONTRACT.md` | 7096 | `a66e40391e19b0e9ce6347ba5561b07e1c1c42c0bdb7017060486555b675b182` |
 | `docs/OPERATIONS.md` | 6813 | `584b2f099df6ffc48e0a0df34b5e8c6e9adfdc7740f9e6e9d61e99c934752559` |
+| `docs/README.md` | 1283 | `1955b0523c54b21e1cbafe574ed76db0e634a775eabc9745e5cde9fcf83cf144` |
 | `docs/RELEASE_CHECKLIST.md` | 4983 | `05d8114fc5a24104063075f175673209431933f189f0727a1f6171cb49b91120` |
 | `docs/RESEARCH_BASELINE.md` | 5238 | `d5b76e6aa0606a7a4084b48ac34334bfaa351d6c28758f706fa26276f7950952` |
 | `docs/SECURITY.md` | 6606 | `8821a1784f74208629107ede8b324640266819c752e2df4f5492c14b6bc193ee` |
-| `docs/SETUP.md` | 9528 | `b6031193e6af5ad4d5583acf31ec51f28fcc4ef62987c8285d00d84a5467052c` |
+| `docs/SETUP.md` | 9753 | `f4158875e0f6f930b52aee90b46c46fd63424d5cb90b4a5d1d0a1191d98b3693` |
 | `docs/SETUP_AND_IMPLEMENTATION.md` | 9769 | `533d0a8166bdee2041c07c1240cca5323a06e59cc55dd63e2eca3b8f356dff9f` |
 | `docs/SKILLS.md` | 7861 | `12854354a113d738311cd7ecbf4d59d4261061467afcef4a639430ce7dc4676d` |
 | `docs/SLO.md` | 2600 | `3347a7146d6a3f567f034f311281f1e73423e903d6b0fafd3e6da38ff135aff6` |
 | `docs/THREAT_MODEL.md` | 4927 | `720b4bb283d3f32ba42b2a2f779e62b2641560267131fec0e125e16bc6f4c1bb` |
 | `docs/UPGRADE_REPORT.md` | 9035 | `b3a4826ce13b44a99fbe3001db5d2e212d92b0467abb60011d9654545ab2e694` |
+| `docs/USER_GUIDE.md` | 3631 | `0175c917d77db11a8a3fabe5c167691ac60f623f8408c6c354e53baf07dd8e77` |
 | `docs/V3_3_0_ENTERPRISE_HARDENING_REPORT.md` | 30024 | `af5d0a2d045316796d0e3dfcae8065d7e7c2276c06542e356714199317987219` |
 | `docs/V3_3_1_ENTERPRISE_FINALIZATION_REPORT.md` | 15776 | `f369ac8c3fe77776e975a57b0df674d87343df0f22edf4e59bc4c24375e2a6bf` |
 | `docs/V3_3_1_PRODUCTION_READINESS_REPORT.md` | 1820 | `c5664262792d9a6faf787cc5717dfbfe84a0c7ec732eff378a2a118916522abc` |
@@ -365,7 +375,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `scripts/install_skills.py` | 4090 | `515961d19e7469ceabdc274190494d29139f4210edd3d759cc658a7a842245ba` |
 | `scripts/quality_gate.py` | 10272 | `98bc221b657f724e6b83052ed58453ff38315468ee20cbd350e4cf46a247cda9` |
 | `scripts/setup.sh` | 919 | `7f309ce306329efb125cc2bc777c6aff1d955de1ebf7263cc41c5ff12e112160` |
-| `scripts/start.py` | 5082 | `db871a71754aafdfa3c95ce7bb09c870db28e52f5111425e3add5ca18a5361e0` |
+| `scripts/start.py` | 5898 | `0084219fe25d48116daea890f4249bb69b99c8c593d7617e4bfc65df0bd5e59b` |
 | `scripts/sync_skill_pack.py` | 1870 | `a18e1cf968244c3864a87ee4b698fa47aad6b92e40f7355784218271c68729e1` |
 | `scripts/test_nexus.py` | 3043 | `1c9fd8725beb5bb600b14fb099bbaeb1239957af63623bb8cc479dbac5f849ba` |
 | `scripts/validate_repository.py` | 4364 | `b1702b71cc254a2d86d9820d17f6448a9cfdc5c93b8ecc0e6a3273edda705995` |
@@ -572,6 +582,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `tests/test_bootstrap.py` | 6129 | `4f4ddd6519a0666d464c5d11afe22a3bd9c0d723dd348313381b495ee450254e` |
 | `tests/test_cli.py` | 1686 | `f1da791f36df14a6f8794d0b5fa799d916509a9c353bdce597b042b5d9583663` |
 | `tests/test_deployment_verification.py` | 748 | `70520cf62947a441a5269527ed0e70a8b3842796dc26a48f5f2a565172594e28` |
+| `tests/test_docs_beginner.py` | 2592 | `fcff256547b7e857783b28acbc1c67a72d27de571980f2c5ae413d1f51f4066b` |
 | `tests/test_guardrails.py` | 2266 | `56bcb58942e653b60975724e7b7f763f4b335a647b503e72528c375260edcb57` |
 | `tests/test_health.py` | 508 | `1fc8fa6288f8da62ed62f6f9877830e32ee2556e2ee84b43c3820ffa3e12a395` |
 | `tests/test_intelligence_upgrades.py` | 12859 | `3eebed64c331e457243b3c4511ea5ae19a1c6d2aed675b3b71aa96eb69f8d845` |
@@ -589,7 +600,7 @@ This inventory is generated deterministically by `scripts/generate_repository_in
 | `tests/test_sessions.py` | 7538 | `a62a86c104eb844da2f481c5941dbce28214435b0281c61d0bc85b242f336202` |
 | `tests/test_skill_api.py` | 1516 | `b1fbfe28a5d7bfd01816a6ccfa523de02b20dcbffc26486b9144c06c15d38902` |
 | `tests/test_skill_runtime.py` | 4304 | `d7384b18c893ea6731476f123cb6d83a424ffb97f1b7221881d605cd67c992ff` |
-| `tests/test_startup.py` | 2718 | `22ded68a6b75d2e80aaa98185f88bf9e03cccc17dbcc675e7da378e04b2cf248` |
+| `tests/test_startup.py` | 3190 | `e0d75616ac7eab8b03c206971d173530354dc7ab5536768e3f9ca39bb626ee34` |
 | `tests/test_validators.py` | 1376 | `917e334e7bf0ce930a30bf656519a2e786f2e2c5e9f7bf9cb346918d62bf608d` |
 | `tests/test_versioning.py` | 1714 | `75eda9160dcf0058db74913f51c2f6bcf29171d49057a5aa3dbd69db9030d10e` |
 | `tools/__init__.py` | 217 | `c34cd0b5966403d494755dbfe53a9b22d47978add2a8126ccb9670df24b58b37` |

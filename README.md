@@ -15,7 +15,7 @@
 
 **Cognexus** is the product identity. **Nexus Runtime** remains the stable internal runtime, Python package, environment-variable namespace, and API implementation.
 
-[Quick start](#quick-start) · [Architecture](#architecture) · [API](#http-api) · [Deployment](#deployment) · [Operations](#operations) · [Security](#security-model)
+[Quickstart](QUICKSTART.md) · [User guide](docs/USER_GUIDE.md) · [API guide](docs/API.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Architecture](#architecture) · [Deployment](#deployment)
 
 </div>
 
@@ -24,6 +24,9 @@
 ## What is Cognexus?
 
 Cognexus is a production-oriented orchestration platform for systems that need more than a single general-purpose agent. It classifies each request, selects the appropriate reasoning tier, delegates bounded work to specialist agents or stateless tools, validates the result against architectural constraints, and returns a structured, traceable response.
+
+New to the project? Start with [QUICKSTART.md](QUICKSTART.md). It keeps the first install
+short, explains every command, and uses dry runs before any live OpenAI request.
 
 It is designed for teams that need:
 
@@ -241,6 +244,10 @@ The runtime is intentionally conservative for local systems, including machines 
 Dry runs and the unit test suite do **not** call OpenAI.
 
 ## Quick start
+
+> [!TIP]
+> Beginners should use the shorter [Cognexus Quickstart](QUICKSTART.md) first. This section
+> gives the same path with more technical context.
 
 ### 1. Clone and enter the repository
 
@@ -936,6 +943,13 @@ Increasing concurrency can raise memory usage, API pressure, and session content
 
 ## Documentation
 
+- [Beginner quickstart](QUICKSTART.md)
+- [User guide](docs/USER_GUIDE.md)
+- [API guide](docs/API.md)
+- [Troubleshooting guide](TROUBLESHOOTING.md)
+- [FAQ](FAQ.md)
+- [Glossary](docs/GLOSSARY.md)
+- [Documentation map](docs/README.md)
 - [Setup guide](docs/SETUP.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Deployment](docs/DEPLOYMENT.md)

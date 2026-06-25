@@ -1,6 +1,11 @@
 # Contributing to Cognexus
 
-## Development setup
+## Development Setup
+
+If you are new to the project, read [QUICKSTART.md](QUICKSTART.md) first. It explains the
+local install and dry-run flow without assuming production knowledge.
+
+With `make`:
 
 ```bash
 make bootstrap
@@ -8,9 +13,17 @@ cp .env.example .env
 make quality-quick
 ```
 
-Python 3.11–3.14 is supported. Python 3.13 is the primary development and release runtime.
+Cross-platform commands without `make`:
 
-## Engineering rules
+```bash
+python scripts/bootstrap.py
+python scripts/quality_gate.py --quick
+python scripts/start.py --env development --host 127.0.0.1 --port 8000
+```
+
+Python 3.11-3.14 is supported. Python 3.13 is the primary development and release runtime.
+
+## Engineering Rules
 
 1. Preserve `/v1/*` API compatibility and the `NEXUS_*` configuration namespace unless a versioned migration is approved.
 2. Keep model behavior probabilistic but authorization, limits, state transitions, and side effects deterministic.
@@ -21,7 +34,7 @@ Python 3.11–3.14 is supported. Python 3.13 is the primary development and rele
 7. New skills must use lowercase kebab-case directories, valid YAML frontmatter, concise activation instructions, and on-demand references.
 8. Avoid dependencies when the standard library or an existing dependency is sufficient.
 
-## Required checks
+## Required Checks
 
 ```bash
 make format
@@ -29,9 +42,11 @@ make quality
 make audit
 ```
 
-`make quality` runs linting, formatting checks, strict mypy, branch-aware tests, repository integrity checks, skill validation, the offline smoke test, and distribution builds. The network-backed dependency audit is separate so offline development remains deterministic.
+`make quality` runs linting, formatting checks, strict mypy, branch-aware tests, repository
+integrity checks, skill validation, the offline smoke test, and distribution builds. The
+network-backed dependency audit is separate so offline development remains deterministic.
 
-## Pull requests
+## Pull Requests
 
 Keep changes reviewable and include:
 

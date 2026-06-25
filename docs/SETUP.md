@@ -1,5 +1,8 @@
 # NEXUS Setup Guide
 
+If this is your first time using Cognexus, start with the shorter
+[Quickstart](../QUICKSTART.md). This setup guide adds more detail and recovery paths.
+
 ## Prerequisites
 
 - Windows 10/11 PowerShell, Linux, macOS, or WSL2.
@@ -259,6 +262,7 @@ docker compose --profile observability up --build
 
 ## Troubleshooting
 
+For a symptom-based guide, see [../TROUBLESHOOTING.md](../TROUBLESHOOTING.md).
 
 ### Pip reports `No matching distribution` after DNS or socket errors
 

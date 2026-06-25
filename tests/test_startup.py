@@ -67,6 +67,17 @@ def test_preflight_runs_runtime_lock_before_dry_run(
     ]
 
 
+def test_parser_help_explains_safe_startup_path(capsys: pytest.CaptureFixture[str]) -> None:
+    with pytest.raises(SystemExit) as raised:
+        start._parser().parse_args(["--help"])
+
+    assert raised.value.code == 0
+    help_text = capsys.readouterr().out
+    assert "Start Cognexus with beginner-safe preflight checks." in help_text
+    assert "python scripts/start.py --env development" in help_text
+    assert "verifies the runtime dependency lock" in help_text
+
+
 def test_main_returns_preflight_failure_without_starting_server(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

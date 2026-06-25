@@ -92,7 +92,18 @@ def _server_environment(
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description="Start Cognexus with beginner-safe preflight checks.",
+        epilog=(
+            "Examples:\n"
+            "  python scripts/start.py --env development\n"
+            "  python scripts/start.py --reload --host 127.0.0.1 --port 8000\n\n"
+            "The wrapper prefers .venv when it exists, creates local data/log folders, "
+            "verifies the runtime dependency lock, runs an offline dry-run smoke test, "
+            "then starts the API. Use --skip-dry-run only after a successful smoke test."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--venv", type=Path, default=DEFAULT_VENV)
     parser.add_argument("--no-venv", action="store_true", help="Use the current interpreter.")
     parser.add_argument("--host", help="Set NEXUS_HOST for this process.")
@@ -135,6 +146,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         port=args.port,
         env_name=args.env_name,
     )
+    host = environment.get("NEXUS_HOST", "127.0.0.1")
+    port = environment.get("NEXUS_PORT", "8000")
+    print(f"Starting Cognexus on http://{host}:{port}", flush=True)
+    print("Press Ctrl+C to stop the server.", flush=True)
     print("+ " + " ".join(command), flush=True)
     try:
         completed = subprocess.run(  # noqa: S603 -- command is built from trusted constants.
