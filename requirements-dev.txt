@@ -3,7 +3,7 @@
 # Tests, typing, linting, packaging, and evaluation helpers
 pytest>=8.4,<9
 pytest-asyncio>=1.1,<2
-pytest-cov>=6.2,<7
+pytest-cov>=7.1.0,<8
 # Starlette 1.x TestClient backend (development/test only).
 httpx2>=2.4,<3
 fakeredis>=2.31,<3
